@@ -28,6 +28,7 @@ services:
     environment:
       DATABASE_URL: postgresql://example_user:secret@thrive-together-postgres-1/postgres-data
       CORS_HOST: http://localhost:3000
+      SIGNING_KEY: ${SIGNING_KEY}
     build:
       context: api
       dockerfile: Dockerfile.dev
