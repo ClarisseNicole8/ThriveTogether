@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from authenticator import authenticator
+from accounts.routers import accounts
 import os
 
 app = FastAPI()
@@ -16,6 +17,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(accounts.router)
 
 @app.get("/api/launch-details")
 def launch_details():

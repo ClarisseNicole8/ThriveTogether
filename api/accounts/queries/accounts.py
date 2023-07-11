@@ -4,25 +4,29 @@ from psycopg_pool import ConnectionPool
 
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
+class DuplicateAccountError(ValueError):
+    pass
+
 class AccountQueries:
 
-    def get_account(self, id: int) -> AccountOutWithPassword:
+    def get_account(self, username: str) -> AccountOutWithPassword:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     """
                     SELECT *
                     FROM users
-                    WHERE users.id = %s
+                    WHERE users.username = %s
                     """,
-                    [id]
+                    [username],
                 )
 
+
                 row = cur.fetchone()
-                return self.account_record_to_dict(row, cur.description)
+                return AccountOutWithPassword(**self.account_record_to_dict(row, cur.description))
 
     def create(self, info: AccountIn, hashed_password: str) -> AccountOutWithPassword:
-        id = None
+        username = None
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
@@ -35,7 +39,7 @@ class AccountQueries:
                     """,
                     [
                         info.username,
-                        info.hashed_password,
+                        hashed_password,
                         info.name,
                         info.age,
                         info.gender,
@@ -44,24 +48,26 @@ class AccountQueries:
                     ],
                 )
 
-                row = cur.fetchone()
-                id = row[0]
-        if id is not None:
-            return self.get_account(id)
+                # row = cur.fetchone()
+                username = info.username
+        if username is not None:
+            return self.get_account(username)
 
     def account_record_to_dict(self, row, description):
         account = None
         if row is not None:
             account = {}
             account_fields = [
+                "pronouns",
+                "email",
                 "id",
                 "username",
                 "name",
                 "age",
                 "gender",
-                "pronouns"
-                "email",
+                "hashed_password",
             ]
             for i, column in enumerate(description):
                 if column.name in account_fields:
                     account[column.name] = row[i]
+        return account
