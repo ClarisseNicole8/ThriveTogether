@@ -1,11 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from authenticator import authenticator
+from messages.routers.messages import messages_router
 from accounts.routers import accounts
 import os
 
 app = FastAPI()
 app.include_router(authenticator.router)
+app.include_router(messages_router)
 
 app.add_middleware(
     CORSMiddleware,

@@ -1,4 +1,4 @@
-# Module3 Project Gamma
+# Module3 Project Gamma!
 
 ## Getting started
 
