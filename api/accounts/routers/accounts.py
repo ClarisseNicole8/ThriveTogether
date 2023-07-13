@@ -16,6 +16,7 @@ from ..queries.accounts import (
     AccountOut,
     AccountQueries,
     DuplicateAccountError,
+    AccountUpdate,
 )
 
 
@@ -67,3 +68,19 @@ async def get_account_info(
             detail="Account not found",
         )
     return account
+
+
+@router.put("/api/accounts/{account_id}", response_model=AccountUpdate)
+async def update_account_info(
+    account_id: int,
+    info: AccountUpdate,
+    accounts: AccountQueries = Depends(),
+):
+    account = accounts.get_account_info(account_id)
+    if not account:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Account not found",
+        )
+    updated_account = accounts.update(account_id, info)
+    return updated_account
