@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from authenticator import authenticator
 from messages.routers.messages import messages_router
 from accounts.routers import accounts
+from matching.routers import matching
 import os
 
 app = FastAPI()
@@ -20,6 +21,7 @@ app.add_middleware(
 )
 
 app.include_router(accounts.router)
+app.include_router(matching.router)
 
 @app.get("/api/launch-details")
 def launch_details():
