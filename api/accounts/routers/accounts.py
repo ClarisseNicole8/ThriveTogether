@@ -18,15 +18,19 @@ from ..queries.accounts import (
     DuplicateAccountError,
 )
 
+
 class AccountForm(BaseModel):
     username: str
     password: str
 
+
 class AccountToken(Token):
     account: AccountOut
 
+
 class HttpError(BaseModel):
     detail: str
+
 
 router = APIRouter()
 
@@ -49,3 +53,17 @@ async def create_account(
     form = AccountForm(username=info.username, password=info.password)
     token = await authenticator.login(response, request, form, accounts)
     return AccountToken(account=account, **token.dict())
+
+
+@router.get("/api/accounts/{account_id}", response_model=AccountOut)
+async def get_account_info(
+    account_id: int,
+    accounts: AccountQueries = Depends(),
+):
+    account = accounts.get_account_info(account_id)
+    if not account:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Account not found",
+        )
+    return account

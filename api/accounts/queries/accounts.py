@@ -4,8 +4,10 @@ from psycopg_pool import ConnectionPool
 
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
+
 class DuplicateAccountError(ValueError):
     pass
+
 
 class AccountQueries:
 
@@ -21,9 +23,23 @@ class AccountQueries:
                     [username],
                 )
 
-
                 row = cur.fetchone()
                 return AccountOutWithPassword(**self.account_record_to_dict(row, cur.description))
+
+    def get_account_info(self, id: int) -> AccountOut:
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    SELECT id, username, name, age, gender, pronouns, email
+                    FROM users
+                    WHERE users.id = %s
+                    """,
+                    [id]
+                )
+
+                row = cur.fetchone()
+                return self.account_record_to_dict(row, cur.description)
 
     def create(self, info: AccountIn, hashed_password: str) -> AccountOutWithPassword:
         username = None
@@ -48,8 +64,8 @@ class AccountQueries:
                     ],
                 )
 
-                # row = cur.fetchone()
                 username = info.username
+
         if username is not None:
             return self.get_account(username)
 
