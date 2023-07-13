@@ -1,6 +1,5 @@
 import os
 from psycopg_pool import ConnectionPool
-#comment
 
 # documentation for psycopg: https://www.psycopg.org/psycopg3/docs/basic/usage.html
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
@@ -16,17 +15,40 @@ class MessageQueries:
                     FROM users u
                     JOIN messages m ON(u.id = m.recipient OR u.id = m.sender)
                     WHERE u.id = %s
+                    ORDER BY m.date DESC
                     """,
                     [user_id],
                 )
 
                 messages = []
+                current_message_group = []
+
                 for row in cur.fetchall():
-                    record = {}
-                    for i, column in enumerate(cur.description):
-                        record[column.name] = row[i]
-                    messages.append(record)
-                print("this is messages", messages)
+                    message = {
+                        "id": row[1],
+                        "recipient": row[2],
+                        "sender": row[3],
+                        "date": row[4],
+                        "content": row[5],
+                        "is_read": row[6],
+                    }
+
+                    if len(current_message_group) == 0:
+                        current_message_group.append(message)
+                    elif (
+                        current_message_group[-1]["recipient"] == message["recipient"]
+                        and current_message_group[-1]["sender"] == message["sender"]
+                    ):
+                        current_message_group.append(message)
+                    else:
+                        messages.append(current_message_group)
+                        current_message_group = [message]
+
+                if current_message_group:
+                    messages.append(current_message_group)
+
+        messages.sort(key=lambda group: group[-1]["date"], reverse=True)
+
         return messages
 
     def create_message(self, data):

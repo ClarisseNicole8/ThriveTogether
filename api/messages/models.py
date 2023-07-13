@@ -18,5 +18,8 @@ class MessageOut(BaseModel):
     date: datetime
     is_read: Optional[bool] = False
 
+class MessageGroup(BaseModel):
+    messages: List[MessageOut]
+
 # class MessagesOut(BaseModel):
 #     messages: List[MessageOut]
