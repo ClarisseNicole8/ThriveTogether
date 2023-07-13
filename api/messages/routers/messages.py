@@ -73,3 +73,30 @@ def create_message(
     )
 
     return message_out
+
+@messages_router.get("/api/messages/{user_id}/message/{user2_id}", tags=["Messages"], response_model=List[MessageOut])
+def get_messages_from_one_user(
+    user_id: int,
+    user2_id: int,
+    response: Response,
+    queries: MessageQueries = Depends(),
+    ):
+
+    messages = []
+    records = queries.get_messages_from_one_user(user_id, user2_id)
+    if records is None or len(records) == 0:
+        response.status_code = 404
+        return []
+
+    for record in records:
+        message_out = MessageOut(
+                id=record["id"],
+                recipient=record["recipient"],
+                sender=record["sender"],
+                content=record["content"],
+                date=record["date"],
+                is_read=record["is_read"],
+        )
+        messages.append(message_out)
+
+    return messages

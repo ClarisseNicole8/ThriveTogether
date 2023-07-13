@@ -51,6 +51,40 @@ class MessageQueries:
 
         return messages
 
+    def get_messages_from_one_user(self, user_id, user2_id):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    SELECT u.id AS user_id, m.id, m.recipient,
+                        m.sender, m.date, m.content, m.is_read
+                    FROM users u
+                    JOIN messages m ON (
+                        (u.id = m.recipient AND m.sender = %s)
+                        OR (u.id = m.sender AND m.recipient = %s)
+                    )
+                    WHERE u.id IN (%s, %s)
+                    ORDER BY m.date DESC
+                    """,
+                    [user_id, user_id, user2_id, user2_id],
+                )
+
+                messages = []
+
+                for row in cur.fetchall():
+                    message = {
+                        "id": row[1],
+                        "recipient": row[2],
+                        "sender": row[3],
+                        "date": row[4],
+                        "content": row[5],
+                        "is_read": row[6],
+                    }
+
+                    messages.append(message)
+
+        return messages
+
     def create_message(self, data):
          with pool.connection() as conn:
             with conn.cursor() as cur:
