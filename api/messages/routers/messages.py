@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, Response
-from typing import List
+from typing import List, Dict
 
 
 from .. queries.messages import MessageQueries
@@ -9,34 +9,21 @@ messages_router = APIRouter()
 
 # router is where your api calls gets called from the frontend
 # this is where queries exist that interact with the db
-@messages_router.get("/api/messages/{user_id}", response_model=List[MessageOut])
+@messages_router.get("/api/messages/{user_id}", tags=["Messages"], response_model=Dict[int, List[MessageOut]])
 def get_messages(
     user_id: int,
     response: Response,
     queries: MessageQueries = Depends(),
 ):
-    print("this is user_id", user_id)
-    records = queries.get_messages(user_id)
 
-    print("this is what record looks like", records)
+    records = queries.get_messages(user_id)
     if records is None:
         response.status_code = 404
         return []
 
-    messages_out = []
-    for record in records:
-        message_out = MessageOut(
-            id=record["id"],
-            recipient=record["recipient"],
-            sender=record["sender"],
-            content=record["content"],
-            date=record["date"],
-            is_read=record["is_read"],
-        )
-        messages_out.append(message_out)
-    return messages_out
+    return records
 
-@messages_router.post("/api/messages/create/", response_model=MessageOut)
+@messages_router.post("/api/messages/create/", tags=["Messages"], response_model=MessageOut)
 def create_message(
     message_in: MessageIn,
     response: Response,
@@ -47,14 +34,18 @@ def create_message(
     if record is None:
         response.status_code = 404
         return []
+    return record
 
-    message_out = MessageOut(
-            id=record["id"],
-            recipient=record["recipient"],
-            sender=record["sender"],
-            content=record["content"],
-            date=record["date"],
-            is_read=record["is_read"],
-    )
+@messages_router.get("/api/messages/{user_id}/message/{user2_id}", tags=["Messages"], response_model=List[MessageOut])
+def get_messages_from_one_user(
+    user_id: int,
+    user2_id: int,
+    response: Response,
+    queries: MessageQueries = Depends(),
+    ):
 
-    return message_out
+    records = queries.get_messages_from_one_user(user_id, user2_id)
+    if records is None or len(records) == 0:
+        response.status_code = 404
+        return []
+    return records

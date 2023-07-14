@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from authenticator import authenticator
 from messages.routers.messages import messages_router
 from accounts.routers import accounts
-from peers.routers import peers
+from matching.routers import matching
 import os
 
 app = FastAPI()
@@ -12,15 +12,17 @@ app.include_router(messages_router)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[os.environ.get("CORS_HOST", "http://localhost:3000")],
+    allow_origins=[
+        os.environ.get("CORS_HOST", "http://localhost:3000"),
+        "http://localhost:3000",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 app.include_router(accounts.router)
-app.include_router(peers.router)
-
+app.include_router(matching.router)
 
 @app.get("/api/launch-details")
 def launch_details():

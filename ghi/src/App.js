@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import Construct from "./Construct.js";
 import ErrorNotification from "./ErrorNotification";
+import LoginForm from "./LoginForm.js";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
+import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 
 function App() {
   const [launchInfo, setLaunchInfo] = useState([]);
   const [error, setError] = useState(null);
+  const domain = /https:\/\/[^/]+/;
+  const basename = process.env.PUBLIC_URL.replace(domain, "");
 
   useEffect(() => {
     async function getData() {
@@ -28,8 +33,15 @@ function App() {
 
   return (
     <div>
-      <ErrorNotification error={error} />
-      <Construct info={launchInfo} />
+      <BrowserRouter basename={basename}>
+        <AuthProvider baseUrl={process.env.REACT_APP_API_HOST}>
+          <Routes>
+            <Route exact path="/login" element={<LoginForm />}></Route>
+          </Routes>
+          <ErrorNotification error={error} />
+          <Construct info={launchInfo} />
+        </AuthProvider>
+      </BrowserRouter>
     </div>
   );
 }
