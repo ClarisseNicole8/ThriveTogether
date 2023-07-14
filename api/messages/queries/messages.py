@@ -5,6 +5,27 @@ from psycopg_pool import ConnectionPool
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
 class MessageQueries:
+    def get_user_info(self, user_id):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    SELECT u.username, u.profile_image, u.profile_link
+                    FROM users u
+                    WHERE u.id = %s
+                    """,
+                    [user_id],
+                )
+                row = cur.fetchone()
+                user_info = {
+                    "username": row[0],
+                    "profile_image": row[1],
+                    "profile_link": row[2],
+                }
+                print(user_info)
+
+        return user_info
+
     def get_messages(self, user_id):
         with pool.connection() as conn:
             with conn.cursor() as cur:
@@ -20,8 +41,7 @@ class MessageQueries:
                     [user_id],
                 )
 
-                messages = []
-                current_message_group = []
+                messages = {}
 
                 for row in cur.fetchall():
                     message = {
@@ -32,24 +52,27 @@ class MessageQueries:
                         "content": row[5],
                         "is_read": row[6],
                     }
-
-                    if len(current_message_group) == 0:
-                        current_message_group.append(message)
-                    elif (
-                        current_message_group[-1]["recipient"] == message["recipient"]
-                        and current_message_group[-1]["sender"] == message["sender"]
-                    ):
-                        current_message_group.append(message)
-                    else:
-                        messages.append(current_message_group)
-                        current_message_group = [message]
-
-                if current_message_group:
-                    messages.append(current_message_group)
-
-        messages.sort(key=lambda group: group[-1]["date"], reverse=True)
-
+                    if message["recipient"] == user_id:
+                        user_info = self.get_user_info(message["sender"])
+                        message.update(user_info)
+                    elif message["sender"] == user_id:
+                        user_info = self.get_user_info(message["recipient"])
+                        message.update(user_info)
+                    # check if other user is recipient or sender
+                    if message["recipient"] == user_id:
+                        key = message["sender"]
+                        if key in messages:
+                            messages[key].append(message)
+                        else:
+                            messages[key] = [message]
+                    elif message["sender"] == user_id:
+                        key = message["recipient"]
+                        if key in messages:
+                            messages[key].append(message)
+                        else:
+                            messages[key] = [message]
         return messages
+
 
     def get_messages_from_one_user(self, user_id, user2_id):
         with pool.connection() as conn:
@@ -80,8 +103,12 @@ class MessageQueries:
                         "content": row[5],
                         "is_read": row[6],
                     }
+                    user2_info = self.get_user_info(user2_id)
+                    message.update(user2_info)
+
 
                     messages.append(message)
+
 
         return messages
 
@@ -108,5 +135,6 @@ class MessageQueries:
                     record = {}
                     for i, column in enumerate(cur.description):
                         record[column.name] = row[i]
-
+                    user_info = self.get_user_info(record["recipient"])
+                    record.update(user_info)
                 return record

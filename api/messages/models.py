@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
-from typing import List, Union, Optional
+from typing import List, Union, Optional, Dict, Any
 
 class Error(BaseModel):
     message: str
@@ -17,9 +17,6 @@ class MessageOut(BaseModel):
     content: str
     date: datetime
     is_read: Optional[bool] = False
-
-class MessageGroup(BaseModel):
-    messages: List[MessageOut]
-
-# class MessagesOut(BaseModel):
-#     messages: List[MessageOut]
+    username: str
+    profile_image: Optional[str]
+    profile_link: Optional[str]
