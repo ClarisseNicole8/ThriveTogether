@@ -14,3 +14,8 @@ As a team, we set up the project and the database, pgAdmin, and got Docker runni
 
 June 29, 2023
 
+July 11, 2023
+Today I worked on:
+Get Account Info and Update Account Info
+
+I wrote the code for the back end endpoints in the accounts.py file to hopefully eliminate potential issues by creating an additional accounts file. I did not get to the routers yet and will work on that tomorrow. I wasn't sure where to start but once I started it made more sense to me. I will test these features after I write the code in the routers/accounts.py file.
