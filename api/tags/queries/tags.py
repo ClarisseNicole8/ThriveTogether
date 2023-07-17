@@ -1,5 +1,5 @@
 import os
-from ..models import TagsOut, AllTagsOut
+from ..models import TagsOut, AllTagsOut, HttpError, SuccessMessage
 from psycopg_pool import ConnectionPool
 
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
@@ -28,7 +28,7 @@ class TagQueries:
             with conn.cursor() as cur:
                 cur.execute(
                     """
-                    SELECT tags.tag FROM users
+                    SELECT tags.tag, tags.id FROM users
                     JOIN user_tags ON (users.id = user_tags.user_id)
                     JOIN tags ON (user_tags.tag_id = tags.id)
                     WHERE (users.username = %s)
@@ -39,6 +39,28 @@ class TagQueries:
                 tags = []
                 rows = cur.fetchall()
                 for row in rows:
-                    tag = str(row[0])
+                    tag = {row[1]: row[0]}
                     tags.append(tag)
                 return {"tags": tags}
+
+    def add_user_tag(self, user_id, tag_id) -> HttpError | SuccessMessage:
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    SELECT COUNT(id) FROM user_tags
+                    WHERE user_id = %s AND tag_id = %s
+                    """,
+                    [user_id, tag_id]
+                )
+                if cur.fetchone()[0] > 0:
+                    return {"detail": "User is already assigned this tag!"}
+                else:
+                    cur.execute(
+                        """
+                        INSERT INTO user_tags (user_id, tag_id) VALUES (%s, %s)
+                        """,
+                        [user_id, tag_id]
+                    )
+
+                    return {"success": "Tag successfully added!"}

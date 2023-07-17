@@ -3,7 +3,7 @@ from fastapi import (
     Response,
     APIRouter,
 )
-from ..models import TagsOut, HttpError, AllTagsOut
+from ..models import TagsOut, HttpError, AllTagsOut, SuccessMessage
 from ..queries.tags import TagQueries
 from authenticator import authenticator
 
@@ -42,3 +42,24 @@ async def get_user_tags(
         return {"detail": "Invalid request."}
     else:
         return record
+
+
+@router.post("/api/tags/{tag_id}",
+             tags=["Tags"],
+             response_model=HttpError | SuccessMessage
+             )
+async def add_user_tag(
+    tag_id: int,
+    response: Response,
+    queries: TagQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    user_id = account_data["id"]
+    try:
+        record = queries.add_user_tag(user_id, tag_id)
+        if "detail" in record:
+            response.status_code = 500
+        return record
+    except BaseException:
+        response.status_code = 500
+        return {"detail": "That tag does not exist."}

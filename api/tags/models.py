@@ -5,8 +5,12 @@ class HttpError(BaseModel):
     detail: str
 
 
+class SuccessMessage(BaseModel):
+    success: str
+
+
 class TagsOut(BaseModel):
-    tags: list[str]
+    tags: list[dict]
 
 
 class AllTagsOut(BaseModel):
