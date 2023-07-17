@@ -4,6 +4,7 @@ from authenticator import authenticator
 from messages.routers.messages import messages_router
 from accounts.routers import accounts
 from matching.routers import matching
+from tags.routers import tags
 import os
 
 app = FastAPI()
@@ -23,6 +24,8 @@ app.add_middleware(
 
 app.include_router(accounts.router)
 app.include_router(matching.router)
+app.include_router(tags.router)
+
 
 @app.get("/api/launch-details")
 def launch_details():
