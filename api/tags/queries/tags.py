@@ -64,3 +64,15 @@ class TagQueries:
                     )
 
                     return {"success": "Tag successfully added!"}
+
+    def delete_user_tag(self, user_id, tag_id) -> HttpError | SuccessMessage:
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    DELETE FROM user_tags
+                    WHERE user_id = %s AND tag_id = %s
+                    """,
+                    [user_id, tag_id]
+                )
+                return {"success": "Tag successfully deleted!"}

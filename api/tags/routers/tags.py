@@ -63,3 +63,22 @@ async def add_user_tag(
     except BaseException:
         response.status_code = 500
         return {"detail": "That tag does not exist."}
+
+
+@router.delete("/api/tags/{tag_id}",
+               tags=["Tags"],
+               response_model=HttpError | SuccessMessage
+               )
+async def delete_user_tag(
+    tag_id: int,
+    response: Response,
+    queries: TagQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    user_id = account_data["id"]
+    try:
+        record = queries.delete_user_tag(user_id, tag_id)
+        return record
+    except BaseException:
+        response.status_code = 500
+        return {"detail": "Unable to delete tag. Are you sure it exists?"}
