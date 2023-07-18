@@ -4,7 +4,7 @@ import ErrorNotification from "./ErrorNotification";
 import LoginForm from "./LoginForm.js";
 import AccountForm from "./AccountForm.js";
 import PeerList from "./PeerList.js";
-import ConnectionButton from "./ConnectionButton.js";
+import PeerButton from "./PeerButton.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
@@ -45,7 +45,7 @@ function App() {
             <Route
               exact
               path="/connection/create/"
-              element={<ConnectionButton />}
+              element={<PeerButton />}
             ></Route>
           </Routes>
           <ErrorNotification error={error} />
