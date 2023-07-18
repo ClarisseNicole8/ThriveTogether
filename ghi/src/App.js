@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Construct from "./Construct.js";
 import ErrorNotification from "./ErrorNotification";
 import LoginForm from "./LoginForm.js";
+import AccountForm from "./AccountForm.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
@@ -37,6 +38,7 @@ function App() {
         <AuthProvider baseUrl={process.env.REACT_APP_API_HOST}>
           <Routes>
             <Route exact path="/login" element={<LoginForm />}></Route>
+            <Route exact path="/register" element={<AccountForm />}></Route>
           </Routes>
           <ErrorNotification error={error} />
           <Construct info={launchInfo} />

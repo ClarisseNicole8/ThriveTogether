@@ -4,28 +4,6 @@ from psycopg_pool import ConnectionPool
 
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
-class TagQueries:
-    def get_user_tags(self, username) -> TagsOut:
-        with pool.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    """
-                    SELECT tags.tag FROM users
-                    JOIN user_tags ON (users.id = user_tags.user_id)
-                    JOIN tags ON (user_tags.tag_id = tags.id)
-                    WHERE (users.username = %s)
-                    """,
-                    [username]
-                )
-
-                tags = []
-                rows = cur.fetchall()
-                for row in rows:
-                    tag = str(row[0])
-                    tags.append(tag)
-                return {"tags": tags}
-
-
 
 class MatchQueries:
     def get_matches(self, tag) -> MatchesOut:
@@ -33,7 +11,9 @@ class MatchQueries:
             with conn.cursor() as cur:
                 cur.execute(
                     """
-                    SELECT users.username, users.about_me, users.profile_link, users.profile_image, users.gender, users.pronouns, users.about_me, tags.tag FROM users
+                    SELECT users.username, users.about_me, users.profile_link,
+                    users.profile_image, users.gender, users.pronouns,
+                    users.about_me, tags.tag FROM users
                     JOIN user_tags ON (users.id = user_tags.user_id)
                     JOIN tags ON (user_tags.tag_id = tags.id)
                     WHERE (tags.tag = %s)
@@ -50,7 +30,6 @@ class MatchQueries:
                     matches.append(MatchOut(**match))
                 return {"matches": matches}
 
-
     def get_user_tags(self, username) -> TagsOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
@@ -70,7 +49,6 @@ class MatchQueries:
                     tag = str(row[0])
                     tags.append(tag)
                 return {"tags": tags}
-
 
     def match_record_to_dict(self, row, description):
         match = None
