@@ -3,6 +3,7 @@ import Construct from "./Construct.js";
 import ErrorNotification from "./ErrorNotification";
 import LoginForm from "./LoginForm.js";
 import AccountForm from "./AccountForm.js";
+import AccountInfo from "./AccountInfo.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
@@ -39,6 +40,7 @@ function App() {
           <Routes>
             <Route exact path="/login" element={<LoginForm />}></Route>
             <Route exact path="/register" element={<AccountForm />}></Route>
+            <Route exact path="/info" element={<AccountInfo />}></Route>
           </Routes>
           <ErrorNotification error={error} />
           <Construct info={launchInfo} />
