@@ -35,6 +35,32 @@ class PeerConnectionQueries:
                 return record
 
 
+    def get_peer_connection(self, user_id):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    SELECT sender, recipient, has_messaged,sender_name, recipient_name, status
+                    FROM peer_connections as p
+                    WHERE (p.recipient = %s)
+                    """,
+                    [user_id]
+                )
+                peer_connections = []
+                rows = cur.fetchall()
+                for row in rows:
+                    peer_connection = {
+                        "sender": row[0],
+                        "recipient": row[1],
+                        "has_messaged": row[2],
+                        "sender_name": row[3],
+                        "recipient_name": row[4],
+                        "status": row[5]
+                    }
+                    peer_connections.append(peer_connection)
+                return peer_connections
+
+
 class PeerQueries:
     def get_peers(self):
         with pool.connection() as conn:

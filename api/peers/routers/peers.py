@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Response
 from typing import List
 
-from ..models import PeerConnection, Peer, User
+from ..models import PeerConnection, Peer, User, PeerConnections
 
 from ..queries.peers import PeerConnectionQueries, PeerQueries, UserQueries
 
@@ -24,7 +24,6 @@ def create_connection(
         return []
 
     peer_connection = PeerConnection(
-        id=record["id"],
         sender=record["sender"],
         recipient=record["recipient"],
         status=record["status"],
@@ -93,3 +92,18 @@ def get_users(
         )
         users.append(user)
     return users
+
+
+@router.get("/api/peer_connections/", tags=["Peers"], response_model=PeerConnections)
+async def get_peerConnection(
+    user_id: int,
+    response: Response,
+    queries: PeerConnectionQueries = Depends(),
+):
+    result = {}
+    records = queries.get_peer_connection(user_id)
+    if records is None:
+        response.status_code = 404
+        return []
+    result['peerConnections'] = records
+    return result

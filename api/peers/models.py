@@ -2,7 +2,6 @@ from pydantic import BaseModel
 
 
 class PeerConnection(BaseModel):
-    id: int
     sender: int
     recipient: int
     status: str
@@ -29,3 +28,7 @@ class User(BaseModel):
     gender: str
     pronouns: str
     email: str
+
+
+class PeerConnections(BaseModel):
+    peerConnections: list[PeerConnection]
