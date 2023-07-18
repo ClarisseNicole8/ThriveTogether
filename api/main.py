@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from authenticator import authenticator
 from messages.routers.messages import messages_router
 from accounts.routers import accounts
+from peers.routers import peers
 from matching.routers import matching
 from tags.routers import tags
 import os
@@ -23,8 +24,12 @@ app.add_middleware(
 )
 
 app.include_router(accounts.router)
+app.include_router(peers.router)
 app.include_router(matching.router)
 app.include_router(tags.router)
+
+
+app.include_router(peers.router)
 
 
 @app.get("/api/launch-details")
@@ -35,6 +40,6 @@ def launch_details():
             "week": 17,
             "day": 5,
             "hour": 19,
-            "min": "00"
+            "min": "00",
         }
     }
