@@ -29,9 +29,6 @@ app.include_router(matching.router)
 app.include_router(tags.router)
 
 
-app.include_router(peers.router)
-
-
 @app.get("/api/launch-details")
 def launch_details():
     return {
