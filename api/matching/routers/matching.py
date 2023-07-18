@@ -25,7 +25,7 @@ router = APIRouter()
 #         return record
 
 
-@router.get("/api/matches",
+@router.get("/api/matches/{tag}",
             tags=["Matches"],
             response_model=MatchesOut | HttpError
             )

@@ -22,9 +22,21 @@ class MessageQueries:
                     "profile_image": row[1],
                     "profile_link": row[2],
                 }
-                print(user_info)
-
         return user_info
+
+
+    def dict_to_list(self, dict1):
+        conversations = []
+        messages = []
+        for key, value in dict1.items():
+            for item in value:
+                item["user_id"] = key
+                messages.append(item)
+
+            conversations.append(messages)
+            messages = []
+        return conversations
+
 
     def get_messages(self, user_id):
         with pool.connection() as conn:
@@ -71,7 +83,8 @@ class MessageQueries:
                             messages[key].append(message)
                         else:
                             messages[key] = [message]
-        return messages
+                conversations = self.dict_to_list(messages)
+        return conversations
 
 
     def get_messages_from_one_user(self, user_id, user2_id):
@@ -104,9 +117,9 @@ class MessageQueries:
                         "is_read": row[6],
                     }
                     user2_info = self.get_user_info(user2_id)
+                    user_id = {"user_id": user2_id}
                     message.update(user2_info)
-
-
+                    message.update(user_id)
                     messages.append(message)
 
 
@@ -136,5 +149,7 @@ class MessageQueries:
                     for i, column in enumerate(cur.description):
                         record[column.name] = row[i]
                     user_info = self.get_user_info(record["recipient"])
+                    user_id = {"user_id": record["recipient"]}
                     record.update(user_info)
+                    record.update(user_id)
                 return record

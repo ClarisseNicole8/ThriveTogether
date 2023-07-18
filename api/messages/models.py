@@ -20,3 +20,4 @@ class MessageOut(BaseModel):
     username: str
     profile_image: Optional[str]
     profile_link: Optional[str]
+    user_id: int

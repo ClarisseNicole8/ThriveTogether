@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, Response
-from typing import List, Dict
+from typing import List
+from authenticator import authenticator
 
 
 from .. queries.messages import MessageQueries
@@ -9,7 +10,7 @@ messages_router = APIRouter()
 
 # router is where your api calls gets called from the frontend
 # this is where queries exist that interact with the db
-@messages_router.get("/api/messages/{user_id}", tags=["Messages"], response_model=Dict[int, List[MessageOut]])
+@messages_router.get("/api/messages/{user_id}", tags=["Messages"], response_model=List[List[MessageOut]])
 def get_messages(
     user_id: int,
     response: Response,
@@ -23,18 +24,19 @@ def get_messages(
 
     return records
 
-@messages_router.post("/api/messages/create/", tags=["Messages"], response_model=MessageOut)
+@messages_router.post("/api/messages/create/", tags=["Messages"], response_model=List[MessageOut])
 def create_message(
     message_in: MessageIn,
     response: Response,
     queries: MessageQueries = Depends()
     ):
-
+    message = []
     record = queries.create_message(message_in)
+    message.append(record)
     if record is None:
         response.status_code = 404
         return []
-    return record
+    return message
 
 @messages_router.get("/api/messages/{user_id}/message/{user2_id}", tags=["Messages"], response_model=List[MessageOut])
 def get_messages_from_one_user(
