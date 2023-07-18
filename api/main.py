@@ -4,7 +4,6 @@ from authenticator import authenticator
 from messages.routers.messages import messages_router
 from accounts.routers import accounts
 from peers.routers import peers
-from peers.routers import peers
 from matching.routers import matching
 from tags.routers import tags
 import os
