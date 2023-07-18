@@ -37,10 +37,11 @@ def create_connection(
 
 @router.get("/api/peers/", tags=["Peers"], response_model=List[Peer])
 def get_peers(
+    user_id: int,
     response: Response,
     queries: PeerQueries = Depends(),
 ):
-    records = queries.get_peers()
+    records = queries.get_peers(user_id)
 
     if records is None:
         response.status_code = 404
@@ -94,7 +95,9 @@ def get_users(
     return users
 
 
-@router.get("/api/peer_connections/", tags=["Peers"], response_model=PeerConnections)
+@router.get(
+    "/api/peer_connections/", tags=["Peers"], response_model=PeerConnections
+)
 async def get_peerConnection(
     user_id: int,
     response: Response,
@@ -105,5 +108,5 @@ async def get_peerConnection(
     if records is None:
         response.status_code = 404
         return []
-    result['peerConnections'] = records
+    result["peerConnections"] = records
     return result
