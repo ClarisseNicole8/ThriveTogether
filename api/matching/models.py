@@ -11,6 +11,7 @@ class TagsOut(BaseModel):
 
 class MatchOut(BaseModel):
     username: str
+    id: int
     tags: list[str]
     about_me: str | None
     profile_link: str | None
