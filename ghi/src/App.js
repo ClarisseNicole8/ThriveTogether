@@ -3,6 +3,9 @@ import Construct from "./Construct.js";
 import ErrorNotification from "./ErrorNotification";
 import LoginForm from "./LoginForm.js";
 import AccountForm from "./AccountForm.js";
+import PeerList from "./PeerList.js";
+import PeerButton from "./PeerButton.js";
+import PeerForm from "./PeerForm.js";
 import AccountInfo from "./AccountInfo.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
@@ -44,6 +47,13 @@ function App() {
           <Routes>
             <Route exact path="/login" element={<LoginForm />}></Route>
             <Route exact path="/register" element={<AccountForm />}></Route>
+            <Route exact path="/peers" element={<PeerList />}></Route>
+            <Route exact path="/connections" element={<PeerButton />}></Route>
+            <Route
+              exact
+              path="/connections/create"
+              element={<PeerForm />}
+            ></Route>
             <Route exact path="/matches" element={<MatchView />}></Route>
             <Route exact path="/inbox" element={<InboxCards />}></Route>
             <Route exact path="/info" element={<AccountInfo />}></Route>
