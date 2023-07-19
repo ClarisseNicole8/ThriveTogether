@@ -13,8 +13,7 @@ import "./App.css";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import MatchView from "./MatchView.js";
 import { useToken } from "@galvanize-inc/jwtdown-for-react";
-
-import InboxCards from "./Messages/InboxCards.js";
+import InboxPage from "./Messages/InboxPage.js";
 
 function App() {
   const [launchInfo, setLaunchInfo] = useState([]);
@@ -48,6 +47,7 @@ function App() {
           <Routes>
             <Route exact path="/login" element={<LoginForm />}></Route>
             <Route exact path="/register" element={<AccountForm />}></Route>
+            <Route exact path="/inbox" element={<InboxPage />}></Route>
             <Route exact path="/peers" element={<PeerList />}></Route>
             <Route exact path="/connections" element={<PeerButton />}></Route>
             <Route
@@ -56,7 +56,6 @@ function App() {
               element={<PeerForm />}
             ></Route>
             <Route exact path="/matches" element={<MatchView />}></Route>
-            <Route exact path="/inbox" element={<InboxCards />}></Route>
             <Route exact path="/info" element={<AccountInfo />}></Route>
             <Route exact path="/edit_tags" element={<EditTags />}></Route>
           </Routes>
