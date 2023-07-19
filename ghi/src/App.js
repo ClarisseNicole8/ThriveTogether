@@ -7,6 +7,7 @@ import PeerList from "./PeerList.js";
 import PeerButton from "./PeerButton.js";
 import PeerForm from "./PeerForm.js";
 import AccountInfo from "./AccountInfo.js";
+import EditTags from "./EditTags.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
@@ -57,6 +58,7 @@ function App() {
             <Route exact path="/matches" element={<MatchView />}></Route>
             <Route exact path="/inbox" element={<InboxCards />}></Route>
             <Route exact path="/info" element={<AccountInfo />}></Route>
+            <Route exact path="/edit_tags" element={<EditTags />}></Route>
           </Routes>
           <ErrorNotification error={error} />
           <Construct info={launchInfo} />
