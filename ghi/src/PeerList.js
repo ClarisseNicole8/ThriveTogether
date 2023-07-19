@@ -3,7 +3,9 @@ import React, { useState, useEffect } from "react";
 function PeerList() {
   const [peer, setPeer] = useState([]);
   async function LoadPeers() {
-    const response = await fetch("http://localhost:8000/api/peers/");
+    const response = await fetch(
+      `${process.env.REACT_APP_API_HOST}/api/peers/${userData["user_id"]}`
+    );
     if (response.ok) {
       const data = await response.json();
       setPeer(data.peer);
