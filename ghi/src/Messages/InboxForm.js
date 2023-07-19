@@ -80,7 +80,7 @@ function InboxForm(props) {
 
         data.content = message;
         data.sender = userData.id;
-        data.recipient = recipient;
+        data.recipient = props.recipient.recipient;
         const createMessageUrl = `${process.env.REACT_APP_API_HOST}/api/messages/create/`;
         const fetchConfig = {
             // credentials: "include",
@@ -106,6 +106,7 @@ function InboxForm(props) {
                 }
                 const response2 = await fetch(messagesUrl, fetchConfig2);
                 let info2 = await response2.json();
+                console.log("Info2:", info2)
 
                 if (response2.ok) {
                     if (info2.length > 10) {
