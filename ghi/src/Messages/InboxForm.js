@@ -27,12 +27,13 @@ function InboxForm(props) {
         if (userData.id) {
             fetchInitialConversation();
         }
+
     }, [userData.id]);
 
 
     async function fetchInitialConversation() {
         try {
-            console.log("User data:", userData["id"])
+
             const messagesUrl = `${process.env.REACT_APP_API_HOST}/api/messages/${userData["id"]}/message/2`; // Assuming 2 is the recipient ID
             const fetchConfig = {
             method: "GET",
@@ -43,10 +44,15 @@ function InboxForm(props) {
 
             const response = await fetch(messagesUrl, fetchConfig);
             const data = await response.json();
+            console.log("data", data)
             if (response.ok) {
                 if (data.length > 10) {
                     const truncData = data.slice(0,10);
+                    console.log("trunc data", truncData)
                     setUpdatedConversation(truncData);
+                    console.log("Initial Conversation:", updatedConversation)
+                } else {
+                    setUpdatedConversation(data);
                 }
 
             } else {
@@ -102,6 +108,8 @@ function InboxForm(props) {
                     if (info2.length > 10) {
                         const truncData = info2.slice(0,10);
                         setUpdatedConversation(truncData);
+                    } else {
+                        setUpdatedConversation(info2);
                     }
                 } else {
                     console.log("Could not retrieve updated conversation.");
