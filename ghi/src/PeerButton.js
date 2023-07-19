@@ -1,19 +1,34 @@
 import React, { useState } from "react";
 
-const PeerButton = () => {
-  // Set an initial state to track whether the peer is added or not
-  const [peerStatus, setPeerStatus] = useState(false);
-
-  const handleAddPeer = () => {
-    // Update the state to toggle between added and not added
-    setPeerStatus((prevState) => !prevState);
-  };
+const PeerButton = (props) => {
+  async function handleAddPeer(event) {
+    event.preventDefault();
+    const data = {
+      sender: props.senderId,
+      recipient: props.recipientId,
+      status: "pending",
+      has_messaged: false,
+      sender_name: props.senderName,
+      recipient_name: props.recipientName,
+    };
+    const peerUrl = `${process.env.REACT_APP_API_HOST}/api/connections/create/`;
+    const fetchConfig = {
+      method: "post",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const response = await fetch(peerUrl, fetchConfig);
+    if (response.ok) {
+      const newPeer = await response.json();
+      console.log(newPeer);
+    }
+  }
 
   return (
     <div>
-      <button onClick={handleAddPeer}>
-        {peerStatus ? "Pending" : "Accept"}
-      </button>
+      <button onClick={handleAddPeer}></button>
     </div>
   );
 };
