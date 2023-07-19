@@ -19,15 +19,12 @@ class AccountOut(BaseModel):
     gender: str
     pronouns: str
     email: str
+    profile_image: str | None
+    banner_image: str | None
+    about_me: str | None
+    my_story: str | None
+    preferences: str | None
 
 
 class AccountOutWithPassword(AccountOut):
     hashed_password: str
-
-
-class AccountUpdate(AccountOut):
-    profile_image: str
-    banner_image: str
-    about_me: str
-    my_story: str
-    preferences: str

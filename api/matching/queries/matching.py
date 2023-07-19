@@ -11,8 +11,9 @@ class MatchQueries:
             with conn.cursor() as cur:
                 cur.execute(
                     """
-                    SELECT users.username, users.about_me, users.profile_link,
-                    users.profile_image, users.gender, users.pronouns,
+                    SELECT users.username, users.id, users.about_me,
+                    users.profile_link, users.profile_image,
+                    users.gender, users.pronouns,
                     users.about_me, tags.tag FROM users
                     JOIN user_tags ON (users.id = user_tags.user_id)
                     JOIN tags ON (user_tags.tag_id = tags.id)
@@ -56,6 +57,7 @@ class MatchQueries:
             match = {}
             match_fields = [
                 "username",
+                "id",
                 "about_me",
                 "profile_link",
                 "profile_image",
