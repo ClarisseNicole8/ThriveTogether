@@ -1,5 +1,5 @@
 import os
-from ..models import AccountIn, AccountOut, AccountOutWithPassword, AccountUpdate
+from ..models import AccountIn, AccountOut, AccountOutWithPassword
 from psycopg_pool import ConnectionPool
 
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
@@ -24,14 +24,14 @@ class AccountQueries:
                 )
 
                 row = cur.fetchone()
-                return AccountOutWithPassword(**self.account_record_to_dict(row, cur.description))
+                return AccountOutWithPassword(**self.updated_account_record_to_dict(row, cur.description))
 
     def get_account_info(self, id: int) -> AccountOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     """
-                    SELECT id, username, name, age, gender, pronouns, email
+                    SELECT id, username, name, age, gender, pronouns, email, profile_image, banner_image, about_me, my_story, preferences
                     FROM users
                     WHERE users.id = %s
                     """,
@@ -61,6 +61,7 @@ class AccountQueries:
                         info.gender,
                         info.pronouns,
                         info.email,
+
                     ],
                 )
 
@@ -69,7 +70,7 @@ class AccountQueries:
         if username is not None:
             return self.get_account(username)
 
-    def update(self, id: int, info: AccountUpdate) -> AccountUpdate:
+    def update(self, id: int, info: AccountOut) -> AccountOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
