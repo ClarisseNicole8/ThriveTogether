@@ -16,8 +16,7 @@ from ..queries.accounts import (
     AccountOut,
     AccountQueries,
     DuplicateAccountError,
-    AccountUpdate,
-)
+    )
 
 
 class AccountForm(BaseModel):
@@ -70,10 +69,10 @@ async def get_account_info(
     return account
 
 
-@router.put("/api/accounts/{account_id}", tags=["Accounts"], response_model=AccountUpdate)
+@router.put("/api/accounts/{account_id}", tags=["Accounts"], response_model=AccountOut)
 async def update_account_info(
     account_id: int,
-    info: AccountUpdate,
+    info: AccountOut,
     accounts: AccountQueries = Depends(),
 ):
     account = accounts.get_account_info(account_id)
