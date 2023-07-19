@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
+import { connect } from 'react-redux';
 
 function InboxForm(props) {
     const [message, setMessage] = useState("");
-    const [userData, setUserData] = useState([]);
+    const [userData, setUserData] = useState("");
     const [updatedConversation, setUpdatedConversation] = useState([]);
+    const { recipient } = props;
 
     useEffect(() => {
         async function getUserData() {
@@ -28,13 +30,14 @@ function InboxForm(props) {
             fetchInitialConversation();
         }
 
-    }, [userData.id]);
+
+    }, [userData.id, recipient]);
 
 
     async function fetchInitialConversation() {
         try {
 
-            const messagesUrl = `${process.env.REACT_APP_API_HOST}/api/messages/${userData["id"]}/message/2`; // Assuming 2 is the recipient ID
+            const messagesUrl = `${process.env.REACT_APP_API_HOST}/api/messages/${userData["id"]}/message/${recipient.recipient}`; // Assuming 2 is the recipient ID
             const fetchConfig = {
             method: "GET",
             headers: {
@@ -77,7 +80,7 @@ function InboxForm(props) {
 
         data.content = message;
         data.sender = userData.id;
-        data.recipient = 2;
+        data.recipient = recipient;
         const createMessageUrl = `${process.env.REACT_APP_API_HOST}/api/messages/create/`;
         const fetchConfig = {
             // credentials: "include",
@@ -125,8 +128,6 @@ function InboxForm(props) {
 
 
 
-
-
 return (
     <div className="my-5 container">
       <div className="row">
@@ -168,5 +169,8 @@ return (
 
 }
 
+const mapStateToProps = (state) => ({
+  recipient: state.recipient,
+});
 
-export default InboxForm;
+export default connect(mapStateToProps)(InboxForm);

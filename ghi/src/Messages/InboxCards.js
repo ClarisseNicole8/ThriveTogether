@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
-
+import { connect } from 'react-redux';
+import { setRecipient } from './recipientActions';
 
 
 function InboxCards(props) {
     const [messagesData, setMessagesData] = useState([]);
-    const [userData, setUserData] = useState("");
+    const [userData, setUserData] = useState([]);
+    const { recipient } = props;
 
     useEffect(() => {
         async function getUserData() {
@@ -45,6 +47,13 @@ function InboxCards(props) {
         getMessagesData();
     }, [userData]);
 
+    const handleSetRecipient = (userId) => {
+      props.setRecipient({recipient: userId});
+    };
+
+  useEffect(() => {
+    console.log('Recipient:', props.recipient); // testing purposes only
+  }, [props.recipient]);
 
 
    return (
@@ -63,6 +72,9 @@ function InboxCards(props) {
                 <p>{conversation[0].content}</p>
                 <small className="text-muted">{conversation[0].date}</small>
             </div>
+            <div>
+              <button onClick={() => handleSetRecipient(conversation[0].user_id)}>Message</button>
+          </div>
           </div>
         ))}
       </div>
@@ -71,4 +83,8 @@ function InboxCards(props) {
   );
 };
 
-export default InboxCards;
+const mapStateToProps = (state) => ({
+  recipient: state.recipient,
+});
+
+export default connect(mapStateToProps, { setRecipient })(InboxCards);

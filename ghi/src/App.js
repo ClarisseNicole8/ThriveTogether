@@ -8,9 +8,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import { useToken } from "@galvanize-inc/jwtdown-for-react";
-
-// import InboxCards from "./Messages/InboxCards.js";
-// import InboxForm from "./Messages/InboxForm.js";
 import InboxPage from "./Messages/InboxPage.js";
 
 function App() {
