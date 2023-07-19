@@ -22,8 +22,6 @@ class MessageQueries:
                     "profile_image": row[1],
                     "profile_link": row[2],
                 }
-                print(user_info)
-
         return user_info
 
 
@@ -86,7 +84,6 @@ class MessageQueries:
                         else:
                             messages[key] = [message]
                 conversations = self.dict_to_list(messages)
-                print(conversations)
         return conversations
 
 

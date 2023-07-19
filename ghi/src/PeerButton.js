@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 
 const PeerButton = () => {
-  const handleClick = () => {
-    // Handle button click logic here
+  // Set an initial state to track whether the peer is added or not
+  const [peerStatus, setPeerStatus] = useState(false);
 
-    console.log("Button clicked!");
+  const handleAddPeer = () => {
+    // Update the state to toggle between added and not added
+    setPeerStatus((prevState) => !prevState);
   };
 
-  return <button onClick={handleClick}>Add a Peer</button>;
+  return (
+    <div>
+      <button onClick={handleAddPeer}>
+        {peerStatus ? "Pending" : "Accept"}
+      </button>
+    </div>
+  );
 };
 
 export default PeerButton;

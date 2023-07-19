@@ -25,7 +25,6 @@ const AccountForm = () => {
             "pronouns": pronouns,
             "email": email,
         };
-        console.log(accountData)
         register(
             accountData,
             `${process.env.REACT_APP_API_HOST}/api/accounts`
