@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import InboxForm from "./InboxForm";
 
 
 function InboxCards(props) {
