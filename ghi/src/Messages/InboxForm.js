@@ -106,6 +106,7 @@ function InboxForm(props) {
                 } else {
                     console.log("Could not retrieve updated conversation.");
                 }
+                setMessage("");
             } else {
             console.log("could not create message");
         }
@@ -126,7 +127,7 @@ return (
             <div className="card-body">
               <h1 className="card-title">Conversation</h1>
               {Array.isArray(updatedConversation) && updatedConversation.length > 0 ? (
-                updatedConversation.map((message) => (
+                updatedConversation.slice().reverse().map((message) => (
                   <div key={message.id} className="mb-3">
                     <strong>{message.sender} | {message.recipient}</strong>: {message.content}
                   </div>

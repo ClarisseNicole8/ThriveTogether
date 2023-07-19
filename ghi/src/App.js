@@ -9,8 +9,9 @@ import "./App.css";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import { useToken } from "@galvanize-inc/jwtdown-for-react";
 
-import InboxCards from "./Messages/InboxCards.js";
-import InboxForm from "./Messages/InboxForm.js";
+// import InboxCards from "./Messages/InboxCards.js";
+// import InboxForm from "./Messages/InboxForm.js";
+import InboxPage from "./Messages/InboxPage.js";
 
 function App() {
   const [launchInfo, setLaunchInfo] = useState([]);
@@ -44,9 +45,8 @@ function App() {
           <Routes>
             <Route exact path="/login" element={<LoginForm />}></Route>
             <Route exact path="/register" element={<AccountForm />}></Route>
-            <Route exact path="/inbox" element={<InboxCards />}></Route>
+            <Route exact path="/inbox" element={<InboxPage />}></Route>
             <Route exact path="/info" element={<AccountInfo />}></Route>
-            <Route exact path="/inboxform" element={<InboxForm />}></Route>
           </Routes>
           <ErrorNotification error={error} />
           <Construct info={launchInfo} />
