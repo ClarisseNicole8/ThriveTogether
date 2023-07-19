@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuthContext, useToken } from "@galvanize-inc/jwtdown-for-react";
+import PeerButton from "./PeerButton";
 
 const MatchView = () => {
   const [matches, setMatches] = useState("");
@@ -102,11 +103,12 @@ const MatchView = () => {
                     <div>
                         <div id="carouselExampleControls" className="carousel carousel-dark slide" data-bs-ride="false" data-bs-interval="false">
                             <div className="carousel-inner">
+                                <div className="container d-flex justify-content-center">
                                     {matches.matches.filter(match => match.username !== userData.username).map(match =>{
                                         carouselCounter += 1;
                                         return (
                                             <div className={`carousel-item ${carouselCounter === 1 ? "active" : ""}`} key={`${match.id} + ${match.username}`}>
-                                                <div className="card text-bg-light mb-3">
+                                                <div className="card text-bg-light mb-3 col-lg-4">
                                                     <h5 className="card-header"><Link to={`${match.profile_link}`}>{match.username}</Link></h5>
                                                     <div className="card-body">
                                                         <img src={`${match.profile_image}`}></img>
@@ -123,10 +125,14 @@ const MatchView = () => {
                                                             );
                                                         })}
                                                     </div>
+                                                    <div className="card-footer d-flex justify-content-center">
+                                                            <PeerButton senderId={userData.id} recipientId={match.id} senderName={userData.username} recipientName={match.username} />
+                                                    </div>
                                                 </div>
                                             </div>
                                         );
                                     })}
+                                </div>
                             </div>
                             <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                                 <span className="carousel-control-prev-icon" aria-hidden="true"></span>

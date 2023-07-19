@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 
-const PeerButton = (props) => {
+function PeerButton (props) {
+  const [addSuccess, setAddSuccess] = useState(false);
+
   async function handleAddPeer(event) {
     event.preventDefault();
     const data = {
@@ -21,14 +23,18 @@ const PeerButton = (props) => {
     };
     const response = await fetch(peerUrl, fetchConfig);
     if (response.ok) {
-      const newPeer = await response.json();
-      console.log(newPeer);
+      setAddSuccess(true);
     }
   }
 
   return (
     <div>
-      <button onClick={handleAddPeer}></button>
+      {addSuccess
+      ?
+        <div className="btn btn-primary">Success!</div>
+      :
+        <button className="btn btn-primary" onClick={handleAddPeer}>Add Peer</button>
+      }
     </div>
   );
 };
