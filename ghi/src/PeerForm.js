@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function PeerForm({ getConferences }) {
+function PeerForm() {
   const [sender, setSender] = useState("");
   const [recipient, setRecipient] = useState("");
   const [status, setStatus] = useState("");
@@ -19,7 +19,7 @@ function PeerForm({ getConferences }) {
       recipient_name: recipientName,
     };
 
-    const locationUrl = "http://localhost:8000/api/conferences/";
+    const peerUrl = "http://localhost:8000/api/connections/create/";
     const fetchConfig = {
       method: "post",
       body: JSON.stringify(data),
@@ -27,159 +27,135 @@ function PeerForm({ getConferences }) {
         "Content-Type": "application/json",
       },
     };
-    const response = await fetch(locationUrl, fetchConfig);
+    const response = await fetch(peerUrl, fetchConfig);
     if (response.ok) {
-      const newConference = await response.json();
-      console.log(newConference);
-      getConferences();
+      const newPeer = await response.json();
+      console.log(newPeer);
 
-      setName("");
-      setStarts("");
-      setEnds("");
-      setDescription("");
-      setMaxPresentations("");
-      setMaxAttendees("");
-      setLocation("");
+      setSender("");
+      setRecipient("");
+      setStatus("");
+      setHasMessaged("");
+      setSenderName("");
+      setRecipientName("");
     }
   }
 
-  function handleChangeName(event) {
+  function handleChangeSender(event) {
     const value = event.target.value;
-    setName(value);
+    setSender(value);
   }
 
-  function handleChangeStarts(event) {
+  function handleChangeRecipient(event) {
     const value = event.target.value;
-    setStarts(value);
+    setRecipient(value);
   }
 
-  function handleChangeEnds(event) {
+  function handleChangeStatus(event) {
     const value = event.target.value;
-    setEnds(value);
+    setStatus(value);
   }
 
-  function handleChangeDescription(event) {
+  function handleChangeHasMessaged(event) {
     const value = event.target.value;
-    setDescription(value);
+    setHasMessaged(value);
   }
 
-  function handleChangeLocation(event) {
+  function handleChangeSenderName(event) {
     const value = event.target.value;
-    setLocation(value);
+    setSenderName(value);
   }
 
-  function handleChangeMaxAttendees(event) {
+  function handleChangeRecipientName(event) {
     const value = event.target.value;
-    setMaxAttendees(value);
-  }
-
-  function handleChangeMaxPresentations(event) {
-    const value = event.target.value;
-    setMaxPresentations(value);
+    setRecipientName(value);
   }
 
   return (
     <div className="row">
       <div className="offset-3 col-6">
         <div className="shadow p-4 mt-4">
-          <h1>Create a new conference</h1>
+          <h1>Add a New Peer</h1>
           <form onSubmit={handleSubmit} id="create-conference-form">
             <div className="form-floating mb-3">
               <input
-                onChange={handleChangeName}
-                value={name}
-                placeholder="Name"
+                onChange={handleChangeSender}
+                value={sender}
+                placeholder="Sender"
+                required
+                type="int"
+                name="sender"
+                id="sender"
+                className="form-control"
+              />
+              <label htmlFor="sender">Sender</label>
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                onChange={handleChangeRecipient}
+                value={recipient}
+                placeholder="Recipient"
+                required
+                type="int"
+                name="recipient"
+                id="recipient"
+                className="form-control"
+              />
+              <label htmlFor="recipient">Recipient</label>
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                onChange={handleChangeStatus}
+                value={status}
+                placeholder="Status"
+                required
+                type="int"
+                name="status"
+                id="status"
+                className="form-control"
+              />
+              <label htmlFor="status">Status</label>
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                onChange={handleChangeHasMessaged}
+                value={hasMessaged}
+                placeholder="Has messaged"
                 required
                 type="text"
-                name="name"
-                id="name"
+                name="has_messaged"
+                id="has_messaged"
                 className="form-control"
               />
-              <label htmlFor="name">Name</label>
+              <label htmlFor="has_messaged">Has Messaged</label>
             </div>
             <div className="form-floating mb-3">
               <input
-                onChange={handleChangeStarts}
-                value={starts}
-                placeholder="Starts"
-                required
-                type="date"
-                name="starts"
-                id="starts"
-                className="form-control"
-              />
-              <label htmlFor="starts">Starts</label>
-            </div>
-            <div className="form-floating mb-3">
-              <input
-                onChange={handleChangeEnds}
-                value={ends}
-                placeholder="Ends"
-                required
-                type="date"
-                name="ends"
-                id="ends"
-                className="form-control"
-              />
-              <label htmlFor="ends">Ends</label>
-            </div>
-            <div className="mb-3">
-              <label htmlFor="description">Description</label>
-              <textarea
-                onChange={handleChangeDescription}
-                value={description}
-                className="form-control"
-                id="description"
-                rows="3"
-                name="description"
-              ></textarea>
-            </div>
-            <div className="form-floating mb-3">
-              <input
-                onChange={handleChangeMaxPresentations}
-                value={maxPresentations}
-                placeholder="Maximum presentations"
-                required
-                type="number"
-                name="max_presentations"
-                id="max_presentations"
-                className="form-control"
-              />
-              <label htmlFor="max_presentations">Maximum presentations</label>
-            </div>
-            <div className="form-floating mb-3">
-              <input
-                onChange={handleChangeMaxAttendees}
-                value={maxAttendees}
-                placeholder="Maximum attendees"
+                onChange={handleChangeSenderName}
+                value={senderName}
+                placeholder="Sender name"
                 required
                 type="text"
-                name="max_attendees"
-                id="max_attendees"
+                name="sender_name"
+                id="sender_name"
                 className="form-control"
               />
-              <label htmlFor="max_attendees">Maximum attendees</label>
+              <label htmlFor="sender_name">Sender Name</label>
             </div>
-            <div className="mb-3">
-              <select
-                onChange={handleChangeLocation}
-                value={locations}
+            <div className="form-floating mb-3">
+              <input
+                onChange={handleChangeRecipientName}
+                value={recipientName}
+                placeholder="Recipient name"
                 required
-                name="locations"
-                id="locations"
-                className="form-select"
-              >
-                <option value="">Choose a location</option>
-                {locations.map((location) => {
-                  return (
-                    <option key={location.id} value={location.id}>
-                      {location.name}
-                    </option>
-                  );
-                })}
-              </select>
+                type="text"
+                name="recipient_name"
+                id="recipient_name"
+                className="form-control"
+              />
+              <label htmlFor="recipient_name">Recipient Name</label>
             </div>
-            <button className="btn btn-primary">Create</button>
+            <button className="btn btn-primary">Add</button>
           </form>
         </div>
       </div>
