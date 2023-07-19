@@ -7,7 +7,7 @@ const PeerButton = (props) => {
       sender: props.senderId,
       recipient: props.recipientId,
       status: "pending",
-      has_messaged: false,
+      has_messaged: False,
       sender_name: props.senderName,
       recipient_name: props.recipientName,
     };
