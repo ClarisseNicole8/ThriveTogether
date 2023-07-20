@@ -93,9 +93,12 @@ def get_users(
     return users
 
 
-# This function is to show the other user request to be a peer for the login user.
-# The login user could check how many people want to be a peer for he/she
-# peer_connection table status would have 3 type: pending, approve, reject, all type will show in peer pending function
+# This function is to show the other user request to be a peer for the login\
+# user.
+# The login user could check how many people want to be a peer for\
+# he/she
+# peer_connection table status would have 3 type: pending, approve, reject,\
+# all type will show in peer pending function
 @router.get(
     "/api/peer_connections", tags=["Peers"], response_model=PeerConnections
 )
@@ -113,8 +116,10 @@ async def get_peerConnection(
     return result
 
 
-# this method is for operate peer request. when the user approve or reject the peer request update
-# This method will update peer_connection table status column, it will change to accept or reject
+# this method is for operate peer request. when the user approve or reject \
+# the peer request update
+# This method will update peer_connection table status column, it will change \
+# to accept or reject
 @router.post(
     "/api/peerRequest/operate", tags=["Peers"], response_model=PeerConnection
 )
@@ -129,8 +134,10 @@ async def update_peerConnection(
     return records
 
 
-# If the user approve the request, this method will also insert the data into peer table
-# Peer table is the such like friends list, it will show the status equal 0 peer.
+# If the user approve the request, this method will also insert the data \
+# into peer table
+# Peer table is the such like friends list, it will show the status \
+# equal 0 peer.
 # peer table status 0: activate 1 and other meaning delete or deactivate
 @router.post("/api/peerAdd", tags=["Peers"], response_model=Peer)
 async def insert_peer(
