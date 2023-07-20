@@ -1,8 +1,8 @@
 import os
 from psycopg_pool import ConnectionPool
 
-# documentation for psycopg: https://www.psycopg.org/psycopg3/docs/basic/usage.html
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
+
 
 class MessageQueries:
     def get_user_info(self, user_id):
@@ -24,7 +24,6 @@ class MessageQueries:
                 }
         return user_info
 
-
     def dict_to_list(self, dict1):
         conversations = []
         messages = []
@@ -32,11 +31,9 @@ class MessageQueries:
             for item in value:
                 item["user_id"] = key
                 messages.append(item)
-
             conversations.append(messages)
             messages = []
         return conversations
-
 
     def get_messages(self, user_id):
         with pool.connection() as conn:
@@ -52,9 +49,7 @@ class MessageQueries:
                     """,
                     [user_id],
                 )
-
                 messages = {}
-
                 for row in cur.fetchall():
                     message = {
                         "id": row[1],
@@ -86,7 +81,6 @@ class MessageQueries:
                 conversations = self.dict_to_list(messages)
         return conversations
 
-
     def get_messages_from_one_user(self, user_id, user2_id):
         with pool.connection() as conn:
             with conn.cursor() as cur:
@@ -104,9 +98,7 @@ class MessageQueries:
                     """,
                     [user_id, user_id, user2_id, user2_id],
                 )
-
                 messages = []
-
                 for row in cur.fetchall():
                     message = {
                         "id": row[1],
@@ -121,12 +113,10 @@ class MessageQueries:
                     message.update(user2_info)
                     message.update(user_id)
                     messages.append(message)
-
-
         return messages
 
     def create_message(self, data):
-         with pool.connection() as conn:
+        with pool.connection() as conn:
             with conn.cursor() as cur:
                 params = [
                     data.sender,
@@ -141,7 +131,6 @@ class MessageQueries:
                     """,
                     params
                 )
-
                 record = None
                 row = cur.fetchone()
                 if row is not None:

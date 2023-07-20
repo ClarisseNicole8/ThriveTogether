@@ -62,11 +62,6 @@ function InboxCards(props) {
       props.setRecipient({recipient: userId});
     };
 
-  // useEffect(() => {
-  //   console.log('Recipient:', props.recipient); // testing purposes only
-  // }, [props.recipient]);
-
-
    return (
     <div className="container mt-4">
       <div className="row justify-content-start">

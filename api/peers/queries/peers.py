@@ -1,5 +1,4 @@
 import os
-from ..models import PeerConnection, Peer, User
 from psycopg_pool import ConnectionPool
 
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
@@ -19,9 +18,11 @@ class PeerConnectionQueries:
                 ]
                 cur.execute(
                     """
-                    INSERT INTO peer_connections (sender, recipient, status, has_messaged, sender_name, recipient_name)
+                    INSERT INTO peer_connections (sender, recipient, status, \
+                        has_messaged, sender_name, recipient_name)
                     VALUES (%s, %s, %s, %s, %s, %s)
-                    RETURNING id, sender, recipient, status, has_messaged, sender_name, recipient_name
+                    RETURNING id, sender, recipient, status, has_messaged, \
+                        sender_name, recipient_name
                     """,
                     params,
                 )
@@ -34,17 +35,17 @@ class PeerConnectionQueries:
                         record[column.name] = row[i]
                 return record
 
-
     def get_peer_connection(self, user_id):
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     """
-                    SELECT sender, recipient, has_messaged,sender_name, recipient_name, status
+                    SELECT sender, recipient, has_messaged,sender_name, \
+                        recipient_name, status
                     FROM peer_connections as p
                     WHERE (p.recipient = %s)
                     """,
-                    [user_id]
+                    [user_id],
                 )
                 peer_connections = []
                 rows = cur.fetchall()
@@ -55,21 +56,24 @@ class PeerConnectionQueries:
                         "has_messaged": row[2],
                         "sender_name": row[3],
                         "recipient_name": row[4],
-                        "status": row[5]
+                        "status": row[5],
                     }
                     peer_connections.append(peer_connection)
                 return peer_connections
 
 
 class PeerQueries:
-    def get_peers(self):
+    def get_peers(self, user_id):
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     """
-                    SELECT *
-                    FROM peer
-                    """
+                    SELECT user_id, peer_id, peer_name, profile_link, tags_id,\
+                        profile_image, status
+                    FROM peer as p
+                    WHERE (p.user_id= %s)
+                    """,
+                    [user_id],
                 )
 
                 peers = []
@@ -80,18 +84,19 @@ class PeerQueries:
                     peers.append(record)
                 return peers
 
-
     # check the request still pending or not
     def get_peer_request(self, user_id, sendRequest_id):
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     """
-                    SELECT sender, recipient, has_messaged,sender_name, recipient_name, status
+                    SELECT sender, recipient, has_messaged,sender_name,\
+                        recipient_name, status
                     FROM peer_connections as p
-                    WHERE (p.sender = %s and p.recipient= %s and status='pending')
+                    WHERE (p.sender = %s and p.recipient= %s and \
+                        status='pending')
                     """,
-                    [sendRequest_id, user_id]
+                    [sendRequest_id, user_id],
                 )
                 rows = cur.fetchall()
                 for row in rows:
@@ -101,7 +106,7 @@ class PeerQueries:
                         "has_messaged": row[2],
                         "sender_name": row[3],
                         "recipient_name": row[4],
-                        "status": row[5]
+                        "status": row[5],
                     }
                 return peer_request
 
@@ -113,9 +118,10 @@ class PeerQueries:
                     update peer_connections
                     set status = %s
                     WHERE (sender = %s and recipient= %s and status ='pending')
-                    RETURNING sender, recipient, status, has_messaged, sender_name, recipient_name
+                    RETURNING sender, recipient, status, has_messaged, \
+                        sender_name, recipient_name
                     """,
-                    [status, sendRequest_id, user_id]
+                    [status, sendRequest_id, user_id],
                 )
                 rows = cur.fetchall()
                 for row in rows:
@@ -125,7 +131,7 @@ class PeerQueries:
                         "has_messaged": row[2],
                         "sender_name": row[3],
                         "recipient_name": row[4],
-                        "status": row[5]
+                        "status": row[5],
                     }
                 return peer_connection
 
@@ -143,9 +149,11 @@ class PeerQueries:
                 ]
                 cur.execute(
                     """
-                    INSERT INTO peer (user_id, peer_id, peer_name, profile_link, tags_id, profile_image, status)
+                    INSERT INTO peer (user_id, peer_id, peer_name, \
+                        profile_link, tags_id, profile_image, status)
                     VALUES (%s, %s, %s, %s, %s, %s, %s)
-                    RETURNING user_id, peer_id, peer_name, profile_link, tags_id, profile_image, status
+                    RETURNING user_id, peer_id, peer_name, profile_link, \
+                        tags_id, profile_image, status
                     """,
                     params,
                 )

@@ -7,22 +7,27 @@ from main import app
 from messages.queries.messages import MessageQueries
 from authenticator import authenticator
 
+
 @pytest.fixture
 def test_client():
     return TestClient(app)
+
 
 @pytest.fixture
 def message_queries():
     return MessageQueries()
 
+
 class EmptyMessageQueries:
     def create_message(self, data):
         return fake_message
+
 
 class MessageIn(BaseModel):
     recipient: int
     sender: int
     content: str
+
 
 class MessageOut(BaseModel):
     id: int
@@ -36,6 +41,7 @@ class MessageOut(BaseModel):
     profile_link: Optional[str]
     user_id: int
 
+
 fake_message = {
     "id": 10,
     "recipient": 1,
@@ -44,7 +50,8 @@ fake_message = {
     "date": "2023-07-20T01:05:46.337467",
     "is_read": False,
     "username": "agifford33",
-    "profile_image": "https://img.fixthephoto.com/blog/images/gallery/news_preview_mob_image__preview_11368.png",
+    "profile_image": "https://img.fixthephoto.com/blog/images/gallery/\
+        news_preview_mob_image__preview_11368.png",
     "profile_link": None,
     "user_id": 1
   }
@@ -65,8 +72,9 @@ def fake_get_current_account_data():
     )
 
 
-def test_create_message(test_client, message_queries):
-    app.dependency_overrides[authenticator.get_current_account_data] = fake_get_current_account_data
+def test_create_message(test_client):
+    app.dependency_overrides[authenticator.get_current_account_data] = \
+        fake_get_current_account_data
     test_client = TestClient(app)
     app.dependency_overrides[MessageQueries] = EmptyMessageQueries
 
@@ -87,7 +95,8 @@ def test_create_message(test_client, message_queries):
         "date": "2023-07-20T01:05:46.337467",
         "is_read": False,
         "username": "agifford33",
-        "profile_image": "https://img.fixthephoto.com/blog/images/gallery/news_preview_mob_image__preview_11368.png",
+        "profile_image": "https://img.fixthephoto.com/blog/images/gallery/\
+            news_preview_mob_image__preview_11368.png",
         "profile_link": None,
         "user_id": 1
     }]
