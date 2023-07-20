@@ -36,7 +36,7 @@ async def get_matches(
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     record = queries.get_matches(tag)
-    if len(record["matches"]) == 0:
+    if len(record) == 0:
         response.status_code = 404
         return {"detail": "No users found with this tag!"}
     else:
