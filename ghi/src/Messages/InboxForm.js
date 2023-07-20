@@ -21,7 +21,6 @@ function InboxForm(props) {
                 console.log("Your data could not be fetched");
             }
         }
-
         getUserData();
     }, []);
 
