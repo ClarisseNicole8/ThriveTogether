@@ -39,6 +39,7 @@ function InboxForm(props) {
 
             const messagesUrl = `${process.env.REACT_APP_API_HOST}/api/messages/${userData["id"]}/message/${recipient.recipient}`; // Assuming 2 is the recipient ID
             const fetchConfig = {
+            credentials: 'include',
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -82,7 +83,7 @@ function InboxForm(props) {
         data.recipient = props.recipient.recipient;
         const createMessageUrl = `${process.env.REACT_APP_API_HOST}/api/messages/create/`;
         const fetchConfig = {
-            // credentials: "include",
+            credentials: "include",
             method: "post",
             body: JSON.stringify(data),
             headers: {
@@ -93,11 +94,11 @@ function InboxForm(props) {
         try {
             const response = await fetch(createMessageUrl, fetchConfig);
             let info = await response.json();
-            
+
             if (response.ok) {
                 const messagesUrl = `${process.env.REACT_APP_API_HOST}/api/messages/${data.sender}/message/${data.recipient}`;
                 const fetchConfig2 = {
-                // credentials: "include",
+                    credentials: "include",
                     method: "get",
                     headers: {
                         'Content-Type': 'application/json',

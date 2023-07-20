@@ -15,6 +15,7 @@ def get_messages(
     user_id: int,
     response: Response,
     queries: MessageQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
 
     records = queries.get_messages(user_id)
@@ -28,7 +29,8 @@ def get_messages(
 def create_message(
     message_in: MessageIn,
     response: Response,
-    queries: MessageQueries = Depends()
+    queries: MessageQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
     ):
     message = []
     record = queries.create_message(message_in)
@@ -44,6 +46,7 @@ def get_messages_from_one_user(
     user2_id: int,
     response: Response,
     queries: MessageQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
     ):
 
     records = queries.get_messages_from_one_user(user_id, user2_id)
