@@ -1,15 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import { connect } from 'react-redux';
 import { setRecipient } from './recipientActions';
-import useToken from "@galvanize-inc/jwtdown-for-react"
+
 
 
 function InboxCards(props) {
     const [messagesData, setMessagesData] = useState([]);
     const [userData, setUserData] = useState([]);
     const [userDataLoaded, setUserDataLoaded] = useState(false);
-    const { token } = useToken();
-    const { recipient } = props;
+
 
     useEffect(() => {
         async function getUserData() {
@@ -27,7 +26,7 @@ function InboxCards(props) {
         }
 
         getUserData();
-    }, []);
+    }, [userDataLoaded]);
 
     useEffect(() => {
         async function getMessagesData() {
@@ -51,13 +50,13 @@ function InboxCards(props) {
         }
 
         getMessagesData();
-    }, [userData]);
+    }, [userData, userDataLoaded]);
 
     useEffect(() => {
       if (userData) {
         setUserDataLoaded(true);
       }
-    }, [userData]);
+    }, [userData, userDataLoaded]);
 
     const handleSetRecipient = (userId) => {
       props.setRecipient({recipient: userId});
