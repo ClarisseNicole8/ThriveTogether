@@ -15,6 +15,7 @@ import AccountUpdate from "./AccountUpdate.js";
 import MatchView from "./MatchView.js";
 import { useToken } from "@galvanize-inc/jwtdown-for-react";
 import InboxPage from "./Messages/InboxPage.js";
+import './Messages/styles.css';
 import PeerConnectionList from "./PeerConnectionList.js";
 
 function App() {
