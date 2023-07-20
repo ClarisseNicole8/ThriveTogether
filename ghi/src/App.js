@@ -15,6 +15,7 @@ import AccountUpdate from "./AccountUpdate.js";
 import MatchView from "./MatchView.js";
 import { useToken } from "@galvanize-inc/jwtdown-for-react";
 import InboxPage from "./Messages/InboxPage.js";
+import PeerConnectionList from "./PeerConnectionList.js";
 
 function App() {
   const [launchInfo, setLaunchInfo] = useState([]);
@@ -60,6 +61,7 @@ function App() {
             <Route exact path="/info" element={<AccountInfo />}></Route>
             <Route exact path="/update" element={<AccountUpdate />}></Route>
             <Route exact path="/edit_tags" element={<EditTags />}></Route>
+            <Route exact path="/peer_connections" element={<PeerConnectionList />}></Route>
           </Routes>
           <ErrorNotification error={error} />
           <Construct info={launchInfo} />
