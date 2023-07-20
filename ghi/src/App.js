@@ -14,7 +14,7 @@ import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import AccountUpdate from "./AccountUpdate.js";
 import MatchView from "./MatchView.js";
 import InboxPage from "./Messages/InboxPage.js";
-import './Messages/styles.css';
+import "./Messages/styles.css";
 import PeerConnectionList from "./PeerConnectionList.js";
 
 function App() {
@@ -52,7 +52,11 @@ function App() {
                 <Route exact path="/register" element={<AccountForm />}></Route>
                 <Route exact path="/inbox" element={<InboxPage />}></Route>
                 <Route exact path="/peers" element={<PeerList />}></Route>
-                <Route exact path="/connections" element={<PeerButton />}></Route>
+                <Route
+                  exact
+                  path="/connections"
+                  element={<PeerButton />}
+                ></Route>
                 <Route
                   exact
                   path="/connections/create"
@@ -62,7 +66,11 @@ function App() {
                 <Route exact path="/info" element={<AccountInfo />}></Route>
                 <Route exact path="/update" element={<AccountUpdate />}></Route>
                 <Route exact path="/edit_tags" element={<EditTags />}></Route>
-                <Route exact path="/peer_connections" element={<PeerConnectionList />}></Route>
+                <Route
+                  exact
+                  path="/peer_connections"
+                  element={<PeerConnectionList />}
+                ></Route>
               </Routes>
               <ErrorNotification error={error} />
               {/* <Construct info={launchInfo} /> */}
