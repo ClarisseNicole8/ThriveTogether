@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function PeerButton (props) {
+function PeerButton(props) {
   const [addSuccess, setAddSuccess] = useState(false);
 
   async function handleAddPeer(event) {
@@ -29,14 +29,15 @@ function PeerButton (props) {
 
   return (
     <div>
-      {addSuccess
-      ?
+      {addSuccess ? (
         <div className="btn btn-primary">Success!</div>
-      :
-        <button className="btn btn-primary" onClick={handleAddPeer}>Add Peer</button>
-      }
+      ) : (
+        <button className="btn btn-primary" onClick={handleAddPeer}>
+          Add Peer
+        </button>
+      )}
     </div>
   );
-};
+}
 
 export default PeerButton;
