@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 const PeerConnectionList = () => {
     const [peerRequest , setpeerRequest] = useState('');
 
-    const fetchData = async () => {
-        const url = 'http://localhost:8000/api/peer_connections?user_id=1';
-        const response = await fetch(url);
+    const showPeerRequest = async () => {
+        // let listUrl=`${process.env.REACT_APP_API_HOST}/api/peer_connections/${Userid.U_id}`;
+        let listUrl=`${process.env.REACT_APP_API_HOST}/api/peer_connections/1`;
+        const response = await fetch(listUrl);
         if (response.ok) {
           const data = await response.json();
           setpeerRequest(data.peerConnections)
@@ -14,44 +14,52 @@ const PeerConnectionList = () => {
       }
 
     useEffect(() => {
-        fetchData();
+        showPeerRequest();
     }, []);
 
     const handleSubmit = async (event) => {
-    //   const data = {};
-    //   const locationUrl = 'http://localhost:8080/api/peerRequest/operate';
-    //   if(event.operate === 'Approve'){
-    //     data.status = 'Approve'
-    //     const fetchConfig = {
-    //       method: "post",
-    //       body: JSON.stringify(data),
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //     };
-    //     const response = await fetch(locationUrl, fetchConfig);
-    //     if (response.ok) {
-    //       const approvedata = await response.json();
+      let approve_data={}
+        let locationUrl=`${process.env.REACT_APP_API_HOST}/api/peerRequest/operate/${event.peerConnections.recipient}/${event.peerConnections.sender}/${event.operate}`;
+        const fetchConfig = {
+          method: "post",
+          body: JSON.stringify(),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        };
+        const response = await fetch(locationUrl,fetchConfig);
+        if (response.ok) {
+          if(event.operate === 'Reject'){
+              alert("success to reject")
+          }
+          if(event.operate === 'Approve'){
+            let approveUrl = `${process.env.REACT_APP_API_HOST}/api/peerAdd`;
+            approve_data ={
+              user_id:event.peerConnections.recipient,
+              peer_id:event.peerConnections.sender,
+              peer_name:event.peerConnections.recipient,
+              profile_link:'this is a link',
+              tags_id:1,
+              profile_image: "this is image",
+              status:0
+            }
+            const approveConfig = {
+            method: "post",
+            body: JSON.stringify(approve_data),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          };
+            const response = await fetch(approveUrl,approveConfig);
+            if (response.ok) {
+               alert("success to approve")
+            }
 
-    //     }
+
+          }
 
 
-    //   }else if(event.operate === 'Reject'){
-    //     data.user_id = event.peerConnections.recipient
-    //     data.sendRequrst_id = event.peerConnections.sender
-    //     data.status = 'Reject'
-    //     const fetchConfig = {
-    //       method: "post",
-    //       body: JSON.stringify(data),
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //     };
-    //     const response = await fetch(locationUrl, fetchConfig);
-    //     if (response.ok) {
-
-    //     }
-    //   }
+        }
   }
 
 
