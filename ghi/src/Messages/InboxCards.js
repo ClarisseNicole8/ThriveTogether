@@ -1,11 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import { connect } from 'react-redux';
 import { setRecipient } from './recipientActions';
+import useToken from "@galvanize-inc/jwtdown-for-react"
 
 
 function InboxCards(props) {
     const [messagesData, setMessagesData] = useState([]);
     const [userData, setUserData] = useState([]);
+    const [userDataLoaded, setUserDataLoaded] = useState(false);
+    const { token } = useToken();
     const { recipient } = props;
 
     useEffect(() => {
@@ -28,13 +31,16 @@ function InboxCards(props) {
 
     useEffect(() => {
         async function getMessagesData() {
-            if (!userData) {
-                return;
+            if (!userDataLoaded || !userData) {
+              return;
             } //wait until userData is set
             let url = `${process.env.REACT_APP_API_HOST}/api/messages/${userData["id"]}`;
-            let response = await fetch(url, {
-                credentials: "include",
-            });
+            let response = await fetch(
+                url,
+                {
+                    credentials: "include",
+                }
+            );
             let data = await response.json()
 
             if (response.ok) {
@@ -47,13 +53,19 @@ function InboxCards(props) {
         getMessagesData();
     }, [userData]);
 
+    useEffect(() => {
+      if (userData) {
+        setUserDataLoaded(true);
+      }
+    }, [userData]);
+
     const handleSetRecipient = (userId) => {
       props.setRecipient({recipient: userId});
     };
 
-  useEffect(() => {
-    console.log('Recipient:', props.recipient); // testing purposes only
-  }, [props.recipient]);
+  // useEffect(() => {
+  //   console.log('Recipient:', props.recipient); // testing purposes only
+  // }, [props.recipient]);
 
 
    return (
