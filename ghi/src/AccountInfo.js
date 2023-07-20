@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import useToken from "@galvanize-inc/jwtdown-for-react";
 
 const AccountInfo = () => {
     const [userId, setUserId] = useState('');
     const [accountInfo, setAccountInfo] = useState('');
-    const { fetchWithToken } = useToken();
 
     async function getAccountInfo() {
         try {
