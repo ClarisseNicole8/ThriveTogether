@@ -11,6 +11,7 @@ import EditTags from "./EditTags.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
+import AccountUpdate from "./AccountUpdate.js";
 import MatchView from "./MatchView.js";
 import { useToken } from "@galvanize-inc/jwtdown-for-react";
 import InboxPage from "./Messages/InboxPage.js";
@@ -57,6 +58,7 @@ function App() {
             ></Route>
             <Route exact path="/matches" element={<MatchView />}></Route>
             <Route exact path="/info" element={<AccountInfo />}></Route>
+            <Route exact path="/update" element={<AccountUpdate />}></Route>
             <Route exact path="/edit_tags" element={<EditTags />}></Route>
           </Routes>
           <ErrorNotification error={error} />
