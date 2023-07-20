@@ -47,13 +47,12 @@ function InboxForm(props) {
 
             const response = await fetch(messagesUrl, fetchConfig);
             const data = await response.json();
-            console.log("data", data)
+
             if (response.ok) {
                 if (data.length > 10) {
                     const truncData = data.slice(0,10);
-                    console.log("trunc data", truncData)
                     setUpdatedConversation(truncData);
-                    console.log("Initial Conversation:", updatedConversation)
+
                 } else {
                     setUpdatedConversation(data);
                 }
@@ -94,7 +93,7 @@ function InboxForm(props) {
         try {
             const response = await fetch(createMessageUrl, fetchConfig);
             let info = await response.json();
-            console.log("Response1: ", info);
+            
             if (response.ok) {
                 const messagesUrl = `${process.env.REACT_APP_API_HOST}/api/messages/${data.sender}/message/${data.recipient}`;
                 const fetchConfig2 = {
@@ -106,7 +105,6 @@ function InboxForm(props) {
                 }
                 const response2 = await fetch(messagesUrl, fetchConfig2);
                 let info2 = await response2.json();
-                console.log("Info2:", info2)
 
                 if (response2.ok) {
                     if (info2.length > 10) {
@@ -139,7 +137,11 @@ return (
               {Array.isArray(updatedConversation) && updatedConversation.length > 0 ? (
                 updatedConversation.slice().reverse().map((message) => (
                   <div key={message.id} className="mb-3">
-                    <strong>{message.sender} | {message.recipient}</strong>: {message.content}
+                    {message.sender === props.recipient.recipient ? (
+                      <strong>{ message.username }</strong>
+                    ) : (
+                      <strong>Me</strong>
+                    )}: {message.content}
                   </div>
                 ))
               ) : (

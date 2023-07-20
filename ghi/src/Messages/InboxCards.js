@@ -59,7 +59,7 @@ function InboxCards(props) {
    return (
     <div className="container mt-4">
       <div className="row justify-content-start">
-        <div className="col-lg-4">
+        <div className="col-lg-6">
             {messagesData.map((conversation) => (
           <div key={conversation[0].id} className="card mb-4">
             <div className="card-body">
@@ -69,11 +69,13 @@ function InboxCards(props) {
                   </div>
                   <strong>{conversation[0].username}</strong>
                 </div>
+                <div className="d-flex justify-content-center mt-2">
                 <p>{conversation[0].content}</p>
-                <small className="text-muted">{conversation[0].date}</small>
+                </div>
+                <small className="text-muted">{new Date(conversation[0].date).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}</small>
             </div>
-            <div>
-              <button onClick={() => handleSetRecipient(conversation[0].user_id)}>Message</button>
+            <div className="d-flex justify-content-left mt-2">
+              <button className="btn btn-sm btn-primary mb-2" onClick={() => handleSetRecipient(conversation[0].user_id)}>Message</button>
           </div>
           </div>
         ))}

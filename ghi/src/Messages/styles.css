@@ -1,0 +1,43 @@
+.container {
+    display:flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.cards-container {
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 100vh;
+}
+
+.solo-inbox-cards {
+    display: flex;
+    flex: 1;
+    margin-left: 2in;
+    margin-right: 2in;
+    width: auto;
+}
+
+.inbox-container {
+  display: flex;
+}
+
+.inbox-cards {
+    display:flex;
+    margin-right: .5in;
+    margin-left: -.5in;
+}
+
+.inbox-form {
+  display: flex;
+  flex: 1 0 60%;
+  margin-left: 1.25in;
+  margin-right: -.5in;
+  margin-top: -.25in;
+}
+
+.inbox-card {
+    flex: 1 0 700px;
+    margin: 0 5px;
+}
