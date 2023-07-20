@@ -34,6 +34,7 @@ const AccountInfo = () => {
         <div>
             <h2>Get Account Information</h2>
             <form onSubmit={handleSubmit}>
+                <br></br>
                 <label>
                     User ID:
                     <input
@@ -42,15 +43,25 @@ const AccountInfo = () => {
                         onChange={(e) => setUserId(e.target.value)}
                     />
                 </label>
-                <button type="submit">Submit</button>
+                <div>
+                    <br></br>
+                </div>
+                <div>
+                    <input className='btn btn-primary' type='submit' value='Submit' />
+                </div>
             </form>
+            <br></br>
             {accountInfo && (
                 <div>
                     <h3>Account Information: {userId}</h3>
                     <pre>{JSON.stringify(accountInfo, null, 2)}</pre>
-                    <Link to={`/update/${userId}`}>
-                        <button>Update Account Info</button>
+                    <br></br>
+                    <Link to={`/update`}>
+                            <div>
+                                <input className='btn btn-primary' type='submit' value='Update' />
+                            </div>
                     </Link>
+                    <br></br>
                 </div>
             )}
         </div>
