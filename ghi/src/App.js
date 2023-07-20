@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Construct from "./Construct.js";
 import ErrorNotification from "./ErrorNotification";
 import LoginForm from "./LoginForm.js";
 import AccountForm from "./AccountForm.js";
@@ -14,13 +13,11 @@ import "./App.css";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import AccountUpdate from "./AccountUpdate.js";
 import MatchView from "./MatchView.js";
-import { useToken } from "@galvanize-inc/jwtdown-for-react";
 import InboxPage from "./Messages/InboxPage.js";
 import './Messages/styles.css';
 import PeerConnectionList from "./PeerConnectionList.js";
 
 function App() {
-  const [launchInfo, setLaunchInfo] = useState([]);
   const [error, setError] = useState(null);
   const domain = /https:\/\/[^/]+/;
   const basename = process.env.PUBLIC_URL.replace(domain, "");
@@ -35,7 +32,6 @@ function App() {
 
       if (response.ok) {
         console.log("got launch data!");
-        setLaunchInfo(data.launch_details);
       } else {
         console.log("drat! something happened");
         setError(data.message);

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback } from 'react';
 import { connect } from 'react-redux';
 
 function InboxForm(props) {
@@ -25,16 +25,7 @@ function InboxForm(props) {
         getUserData();
     }, []);
 
-    useEffect(() => {
-        if (userData.id) {
-            fetchInitialConversation();
-        }
-
-
-    }, [userData.id, recipient]);
-
-
-    async function fetchInitialConversation() {
+    const fetchInitialConversation = useCallback( async () => {
         try {
 
             const messagesUrl = `${process.env.REACT_APP_API_HOST}/api/messages/${userData["id"]}/message/${recipient.recipient}`; // Assuming 2 is the recipient ID
@@ -64,7 +55,16 @@ function InboxForm(props) {
         } catch (error) {
             console.error('Error fetching initial conversation data:', error);
         }
-    }
+    }, [userData, recipient.recipient])
+
+
+    useEffect(() => {
+        if (userData.id) {
+            fetchInitialConversation();
+        }
+
+
+    }, [userData.id, recipient, fetchInitialConversation]);
 
     const handleNewMessage = (event) => {
         const value = event.target.value;
@@ -93,7 +93,7 @@ function InboxForm(props) {
 
         try {
             const response = await fetch(createMessageUrl, fetchConfig);
-            let info = await response.json();
+            // let info = await response.json();
 
             if (response.ok) {
                 const messagesUrl = `${process.env.REACT_APP_API_HOST}/api/messages/${data.sender}/message/${data.recipient}`;
