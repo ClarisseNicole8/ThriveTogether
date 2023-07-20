@@ -8,6 +8,7 @@ import PeerButton from "./PeerButton.js";
 import PeerForm from "./PeerForm.js";
 import AccountInfo from "./AccountInfo.js";
 import EditTags from "./EditTags.js";
+import Nav from "./Nav.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
@@ -47,25 +48,30 @@ function App() {
     <div>
       <BrowserRouter basename={basename}>
         <AuthProvider baseUrl={process.env.REACT_APP_API_HOST}>
-          <Routes>
-            <Route exact path="/login" element={<LoginForm />}></Route>
-            <Route exact path="/register" element={<AccountForm />}></Route>
-            <Route exact path="/inbox" element={<InboxPage />}></Route>
-            <Route exact path="/peers" element={<PeerList />}></Route>
-            <Route exact path="/connections" element={<PeerButton />}></Route>
-            <Route
-              exact
-              path="/connections/create"
-              element={<PeerForm />}
-            ></Route>
-            <Route exact path="/matches" element={<MatchView />}></Route>
-            <Route exact path="/info" element={<AccountInfo />}></Route>
-            <Route exact path="/update" element={<AccountUpdate />}></Route>
-            <Route exact path="/edit_tags" element={<EditTags />}></Route>
-            <Route exact path="/peer_connections" element={<PeerConnectionList />}></Route>
-          </Routes>
-          <ErrorNotification error={error} />
-          <Construct info={launchInfo} />
+          <div className="grid">
+            <Nav />
+            <main className="main-content">
+              <Routes>
+                <Route exact path="/login" element={<LoginForm />}></Route>
+                <Route exact path="/register" element={<AccountForm />}></Route>
+                <Route exact path="/inbox" element={<InboxPage />}></Route>
+                <Route exact path="/peers" element={<PeerList />}></Route>
+                <Route exact path="/connections" element={<PeerButton />}></Route>
+                <Route
+                  exact
+                  path="/connections/create"
+                  element={<PeerForm />}
+                ></Route>
+                <Route exact path="/matches" element={<MatchView />}></Route>
+                <Route exact path="/info" element={<AccountInfo />}></Route>
+                <Route exact path="/update" element={<AccountUpdate />}></Route>
+                <Route exact path="/edit_tags" element={<EditTags />}></Route>
+                <Route exact path="/peer_connections" element={<PeerConnectionList />}></Route>
+              </Routes>
+              <ErrorNotification error={error} />
+              {/* <Construct info={launchInfo} /> */}
+            </main>
+          </div>
         </AuthProvider>
       </BrowserRouter>
     </div>
