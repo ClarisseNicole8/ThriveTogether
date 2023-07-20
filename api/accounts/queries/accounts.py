@@ -24,14 +24,27 @@ class AccountQueries:
                 )
 
                 row = cur.fetchone()
-                return AccountOutWithPassword(**self.updated_account_record_to_dict(row, cur.description))
+                return AccountOutWithPassword(
+                    **self.updated_account_record_to_dict(row, cur.description)
+                    )
 
     def get_account_info(self, id: int) -> AccountOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     """
-                    SELECT id, username, name, age, gender, pronouns, email, profile_image, banner_image, about_me, my_story, preferences
+                    SELECT
+                    id,
+                    username,
+                    name, age,
+                    gender,
+                    pronouns,
+                    email,
+                    profile_image,
+                    banner_image,
+                    about_me,
+                    my_story,
+                    preferences
                     FROM users
                     WHERE users.id = %s
                     """,
@@ -41,14 +54,24 @@ class AccountQueries:
                 row = cur.fetchone()
                 return self.account_record_to_dict(row, cur.description)
 
-    def create(self, info: AccountIn, hashed_password: str) -> AccountOutWithPassword:
+    def create(
+            self,
+            info: AccountIn,
+            hashed_password: str
+            ) -> AccountOutWithPassword:
         username = None
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     """
                     INSERT INTO users (
-                       username, hashed_password, name, age, gender, pronouns, email
+                       username,
+                       hashed_password,
+                       name,
+                       age,
+                       gender,
+                       pronouns,
+                       email
                     )
                     VALUES (%s, %s, %s, %s, %s, %s, %s)
                     RETURNING id
@@ -108,7 +131,9 @@ class AccountQueries:
                 )
 
                 row = cur.fetchone()
-                return self.updated_account_record_to_dict(row, cur.description)
+                return self.updated_account_record_to_dict(
+                    row, cur.description
+                    )
 
     def account_record_to_dict(self, row, description):
         account = None
