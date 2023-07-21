@@ -63,7 +63,9 @@ def fake_get_current_account_data():
 
 
 def test_get_matches():
-    app.dependency_overrides[authenticator.get_current_account_data] = fake_get_current_account_data
+    app.dependency_overrides[authenticator.get_current_account_data] = (
+        fake_get_current_account_data
+    )
     app.dependency_overrides[MatchQueries] = EmptyMatchQueries
 
     response = client.get("/api/matches/ADHD/")
@@ -75,7 +77,9 @@ def test_get_matches():
 
 
 def test_no_matches():
-    app.dependency_overrides[authenticator.get_current_account_data] = fake_get_current_account_data
+    app.dependency_overrides[authenticator.get_current_account_data] = (
+        fake_get_current_account_data
+    )
     app.dependency_overrides[MatchQueries] = EmptyMatchQueries
 
     response = client.get("/api/matches/null/")
