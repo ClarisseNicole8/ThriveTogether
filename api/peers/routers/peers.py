@@ -93,10 +93,15 @@ def get_users(
     return users
 
 
-# This function is to show the other user request to be a peer for the login user.
-# The login user could check how many people want to be a peer for he/she
-# peer_connection table status would have 3 type: pending, approve, reject, all type will show in peer pending function
-@router.get("/api/peer_connections/{user_id}", tags=["Peers"], response_model=PeerConnections)
+# This function is to show the other user request to be a peer for the login\
+# user.
+# The login user could check how many people want to be a peer for\
+# he/she
+# peer_connection table status would have 3 type: pending, approve, reject,\
+# all type will show in peer pending function
+@router.get(
+    "/api/peer_connections", tags=["Peers"], response_model=PeerConnections
+)
 async def get_peerConnection(
     user_id: int,
     response: Response,
@@ -111,9 +116,13 @@ async def get_peerConnection(
     return result
 
 
-# this method is for operate peer request. when the user approve or reject the peer request update
-# This method will update peer_connection table status column, it will change to accept or reject
-@router.post("/api/peerRequest/operate/{user_id}/{sendRequest_id}/{status}", tags=["Peers"], response_model=PeerConnection)
+# this method is for operate peer request. when the user approve or reject \
+# the peer request update
+# This method will update peer_connection table status column, it will change \
+# to accept or reject
+@router.post(
+    "/api/peerRequest/operate", tags=["Peers"], response_model=PeerConnection
+)
 async def update_peerConnection(
     user_id: int,
     sendRequest_id: int,
