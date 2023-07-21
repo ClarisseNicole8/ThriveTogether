@@ -25,8 +25,9 @@ packaging==23.1
 passlib==1.7.4
 pluggy==1.2.0
 psycopg==3.1.2
-psycopg-binary==3.1.2
+# psycopg-binary==3.1.2
 psycopg-pool==3.1.7
+psycopg2-binary==2.9.6
 pyasn1==0.5.0
 pycparser==2.21
 pydantic==1.10.11
