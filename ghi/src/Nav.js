@@ -60,6 +60,9 @@ function Nav() {
                         <li>
                             <Link to="/edit_tags">Edit Tags</Link>
                         </li>
+                        <li>
+                            <Link to="/peer_connections">Check peer request</Link>
+                        </li>
                     </ul>
                 </div>
             </header>

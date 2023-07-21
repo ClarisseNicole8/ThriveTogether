@@ -1,14 +1,17 @@
 from pydantic import BaseModel
 from datetime import datetime
-from typing import List, Union, Optional, Dict, Any
+from typing import Optional
+
 
 class Error(BaseModel):
     message: str
+
 
 class MessageIn(BaseModel):
     recipient: int
     sender: int
     content: str
+
 
 class MessageOut(BaseModel):
     id: int
