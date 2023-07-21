@@ -93,8 +93,7 @@ class PeerQueries:
                     SELECT sender, recipient, has_messaged,sender_name,\
                         recipient_name, status
                     FROM peer_connections as p
-                    WHERE (p.sender = %s and p.recipient= %s and \
-                        status='pending')
+                    WHERE (p.sender = %s and p.recipient= %s)
                     """,
                     [sendRequest_id, user_id],
                 )
@@ -117,7 +116,7 @@ class PeerQueries:
                     """
                     update peer_connections
                     set status = %s
-                    WHERE (sender = %s and recipient= %s and status ='pending')
+                    WHERE (sender = %s and recipient= %s)
                     RETURNING sender, recipient, status, has_messaged, \
                         sender_name, recipient_name
                     """,
