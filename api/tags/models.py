@@ -15,3 +15,7 @@ class TagsOut(BaseModel):
 
 class AllTagsOut(BaseModel):
     tags: list[dict]
+
+
+class Tag(BaseModel):
+    tag: str

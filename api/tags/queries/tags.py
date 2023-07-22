@@ -6,7 +6,6 @@ pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
 
 class TagQueries:
-
     def get_all_tags(self) -> AllTagsOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
@@ -33,7 +32,7 @@ class TagQueries:
                     JOIN tags ON (user_tags.tag_id = tags.id)
                     WHERE (users.username = %s)
                     """,
-                    [username]
+                    [username],
                 )
 
                 tags = []
@@ -51,7 +50,7 @@ class TagQueries:
                     SELECT COUNT(id) FROM user_tags
                     WHERE user_id = %s AND tag_id = %s
                     """,
-                    [user_id, tag_id]
+                    [user_id, tag_id],
                 )
                 if cur.fetchone()[0] > 0:
                     return {"detail": "User is already assigned this tag!"}
@@ -60,7 +59,7 @@ class TagQueries:
                         """
                         INSERT INTO user_tags (user_id, tag_id) VALUES (%s, %s)
                         """,
-                        [user_id, tag_id]
+                        [user_id, tag_id],
                     )
 
                     return {"success": "Tag successfully added!"}
@@ -73,6 +72,29 @@ class TagQueries:
                     DELETE FROM user_tags
                     WHERE user_id = %s AND tag_id = %s
                     """,
-                    [user_id, tag_id]
+                    [user_id, tag_id],
                 )
                 return {"success": "Tag successfully deleted!"}
+
+    def create_tag(self, data):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                params = [
+                    data.tag,
+                ]
+                cur.execute(
+                    """
+                    INSERT INTO tags (tag)
+                    VALUES (%s)
+                    RETURNING id, tag
+                    """,
+                    params,
+                )
+
+                record = None
+                row = cur.fetchone()
+                if row is not None:
+                    record = {}
+                    for i, column in enumerate(cur.description):
+                        record[column.name] = row[i]
+                return record
