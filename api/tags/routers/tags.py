@@ -3,17 +3,18 @@ from fastapi import (
     Response,
     APIRouter,
 )
-from ..models import TagsOut, HttpError, AllTagsOut, SuccessMessage
+from ..models import Tag, TagsOut, HttpError, AllTagsOut, SuccessMessage
 from ..queries.tags import TagQueries
 from authenticator import authenticator
 
 router = APIRouter()
 
 
-@router.get("/api/tags/",
-            tags=["Tags"],
-            response_model=AllTagsOut | HttpError,
-            )
+@router.get(
+    "/api/tags/",
+    tags=["Tags"],
+    response_model=AllTagsOut | HttpError,
+)
 async def get_all_tags(
     response: Response,
     queries: TagQueries = Depends(),
@@ -26,10 +27,11 @@ async def get_all_tags(
         return record
 
 
-@router.get("/api/tags/{username}",
-            tags=["Tags"],
-            response_model=TagsOut | HttpError,
-            )
+@router.get(
+    "/api/tags/{username}",
+    tags=["Tags"],
+    response_model=TagsOut | HttpError,
+)
 async def get_user_tags(
     username: str,
     response: Response,
@@ -44,10 +46,11 @@ async def get_user_tags(
         return record
 
 
-@router.post("/api/tags/{tag_id}",
-             tags=["Tags"],
-             response_model=HttpError | SuccessMessage
-             )
+@router.post(
+    "/api/tags/{tag_id}",
+    tags=["Tags"],
+    response_model=HttpError | SuccessMessage,
+)
 async def add_user_tag(
     tag_id: int,
     response: Response,
@@ -65,10 +68,11 @@ async def add_user_tag(
         return {"detail": "That tag does not exist."}
 
 
-@router.delete("/api/tags/{tag_id}",
-               tags=["Tags"],
-               response_model=HttpError | SuccessMessage
-               )
+@router.delete(
+    "/api/tags/{tag_id}",
+    tags=["Tags"],
+    response_model=HttpError | SuccessMessage,
+)
 async def delete_user_tag(
     tag_id: int,
     response: Response,
@@ -82,3 +86,13 @@ async def delete_user_tag(
     except BaseException:
         response.status_code = 500
         return {"detail": "Unable to delete tag. Are you sure it exists?"}
+
+
+@router.post("/tags/create", tags=["Tags"], response_model=Tag)
+def create_tag(
+    tag: Tag,
+    response: Response,
+    queries: TagQueries = Depends(),
+):
+    records = queries.create_tag(tag)
+    return records
