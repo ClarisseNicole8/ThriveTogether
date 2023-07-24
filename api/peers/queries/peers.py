@@ -93,8 +93,7 @@ class PeerQueries:
                     SELECT sender, recipient, has_messaged,sender_name,\
                         recipient_name, status
                     FROM peer_connections as p
-                    WHERE (p.sender = %s and p.recipient= %s and \
-                        status='pending')
+                    WHERE (p.sender = %s and p.recipient= %s)
                     """,
                     [sendRequest_id, user_id],
                 )
