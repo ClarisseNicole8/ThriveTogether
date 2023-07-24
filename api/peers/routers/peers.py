@@ -100,7 +100,9 @@ def get_users(
 # peer_connection table status would have 3 type: pending, approve, reject,\
 # all type will show in peer pending function
 @router.get(
-    "/api/peer_connections", tags=["Peers"], response_model=PeerConnections
+    "/api/peer_connections/{user_id}",
+    tags=["Peers"],
+    response_model=PeerConnections
 )
 async def get_peerConnection(
     user_id: int,
@@ -121,7 +123,9 @@ async def get_peerConnection(
 # This method will update peer_connection table status column, it will change \
 # to accept or reject
 @router.post(
-    "/api/peerRequest/operate", tags=["Peers"], response_model=PeerConnection
+    "/api/peerRequest/operate/{user_id}/{sendRequest_id}/{status}",
+    tags=["Peers"],
+    response_model=PeerConnection
 )
 async def update_peerConnection(
     user_id: int,

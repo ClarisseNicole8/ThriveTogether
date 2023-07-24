@@ -29,6 +29,11 @@ app.include_router(matching.router)
 app.include_router(tags.router)
 
 
+@app.get("/")
+def root():
+    return {"message": "You hit the root path!"}
+
+
 @app.get("/api/launch-details")
 def launch_details():
     return {
