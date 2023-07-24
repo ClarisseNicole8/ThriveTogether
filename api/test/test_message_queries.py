@@ -50,8 +50,7 @@ fake_message = {
     "date": "2023-07-20T01:05:46.337467",
     "is_read": False,
     "username": "agifford33",
-    "profile_image": "https://img.fixthephoto.com/blog/images/gallery/\
-        news_preview_mob_image__preview_11368.png",
+    "profile_image": "https://img.fixthephoto.com/blog/images/gallery/",
     "profile_link": None,
     "user_id": 1
   }
@@ -95,8 +94,7 @@ def test_create_message(test_client):
         "date": "2023-07-20T01:05:46.337467",
         "is_read": False,
         "username": "agifford33",
-        "profile_image": "https://img.fixthephoto.com/blog/images/gallery/\
-            news_preview_mob_image__preview_11368.png",
+        "profile_image": "https://img.fixthephoto.com/blog/images/gallery/",
         "profile_link": None,
         "user_id": 1
     }]
