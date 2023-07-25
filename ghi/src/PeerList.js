@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 function PeerList() {
   const [peer, setPeer] = useState([]);
@@ -24,7 +24,8 @@ function PeerList() {
     getPeerData();
   }, []);
 
-  async function LoadPeers() {
+
+  const LoadPeers = useCallback(async () => {
     console.log("!!!", peerData);
     const response = await fetch(
       `${process.env.REACT_APP_API_HOST}/api/peers/${peerData["id"]}`
@@ -37,11 +38,12 @@ function PeerList() {
     } else {
       console.log("Error! Peer not found.");
     }
-  }
+  }, [peerData])
+
 
   useEffect(() => {
     LoadPeers();
-  }, [peerData]);
+  }, [peerData, LoadPeers]);
 
   return (
     <div>
