@@ -14,26 +14,27 @@ const PeerConnectionList = () => {
 
       if (response.ok) {
         setLoginAccount(data.account);
-      } else {
-        console.log("Peer data could not be fetched");
       }
     }
 
     getPeerData();
-  }, []);
-
-  const showPeerRequest = async () => {
-    // get peer request data
-    let listUrl = `${process.env.REACT_APP_API_HOST}/api/peer_connections/${loginAccount.id}`;
-    // let listUrl=`${process.env.REACT_APP_API_HOST}/api/peer_connections/1`;
-    const response = await fetch(listUrl);
-    if (response.ok) {
-      const data = await response.json();
-      setpeerRequest(data.peerConnections);
-    }
-  };
+  }, [loginAccount]);
 
   useEffect(() => {
+    async function showPeerRequest() {
+      if (!loginAccount) {
+        return;
+      }
+      // get peer request data
+      let listUrl = `${process.env.REACT_APP_API_HOST}/api/peer_connections/${loginAccount.id}`;
+      // let listUrl=`${process.env.REACT_APP_API_HOST}/api/peer_connections/1`;
+      const response = await fetch(listUrl);
+      if (response.ok) {
+        const data = await response.json();
+        setpeerRequest(data.peerConnections);
+      }
+    }
+
     showPeerRequest();
   }, [loginAccount]);
 
@@ -96,29 +97,36 @@ const PeerConnectionList = () => {
         <tbody>
           {Array.from(peerRequest).map((peerConnections) => {
             return (
-              <tr key={peerConnections.recipient}>
+              <tr key={peerConnections.sender_name + peerConnections.recipient}>
                 <td>{peerConnections.sender_name}</td>
                 <td>{peerConnections.has_messaged}</td>
                 <td>{peerConnections.status}</td>
                 <td>
-                  <button
-                    className="btn btn-outline-warning"
-                    onClick={handleSubmit.bind(this, {
-                      peerConnections,
-                      operate: "Approve",
-                    })}
+                  <div
+                    style={{
+                      display:
+                        peerConnections.status === "pending" ? "" : "none",
+                    }}
                   >
-                    Approve
-                  </button>
-                  <button
-                    className="btn btn-outline-warning"
-                    onClick={handleSubmit.bind(this, {
-                      peerConnections,
-                      operate: "Reject",
-                    })}
-                  >
-                    Reject
-                  </button>
+                    <button
+                      className="btn btn-outline-warning"
+                      onClick={handleSubmit.bind(this, {
+                        peerConnections,
+                        operate: "Approve",
+                      })}
+                    >
+                      Approve
+                    </button>
+                    <button
+                      className="btn btn-outline-warning"
+                      onClick={handleSubmit.bind(this, {
+                        peerConnections,
+                        operate: "Reject",
+                      })}
+                    >
+                      Reject
+                    </button>
+                  </div>
                 </td>
               </tr>
             );
