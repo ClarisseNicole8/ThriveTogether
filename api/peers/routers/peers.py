@@ -9,7 +9,7 @@ router = APIRouter()
 
 
 @router.post(
-    "/api/connections/create/",
+    "/api/connections/create",
     tags=["Peers"],
     response_model=PeerConnection,
 )

@@ -11,7 +11,7 @@ router = APIRouter()
 
 
 @router.get(
-    "/api/tags/",
+    "/api/tags",
     tags=["Tags"],
     response_model=AllTagsOut | HttpError,
 )
