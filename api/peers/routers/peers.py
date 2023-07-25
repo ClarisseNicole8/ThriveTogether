@@ -61,17 +61,18 @@ def get_peers(
     return peers
 
 
-@router.get("/api/users/", tags=["Peers"], response_model=List[User])
+@router.get("/api/users/{user_id}", tags=["Peers"], response_model=List[User])
 def get_users(
+    user_id: int,
     response: Response,
     queries: UserQueries = Depends(),
 ):
-    records = queries.get_users()
+    records = queries.get_users(user_id)
 
     if records is None:
         response.status_code = 404
         return []
-
+    print(records)
     users = []
     for record in records:
         user = User(
@@ -88,6 +89,7 @@ def get_users(
             about_me=record["about_me"],
             my_story=record["my_story"],
             preferences=record["preferences"],
+            tag_id=record["tag_id"],
         )
         users.append(user)
     return users

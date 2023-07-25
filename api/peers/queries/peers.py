@@ -116,7 +116,7 @@ class PeerQueries:
                     """
                     update peer_connections
                     set status = %s
-                    WHERE (sender = %s and recipient= %s and status ='pending')
+                    WHERE (sender = %s and recipient= %s)
                     RETURNING sender, recipient, status, has_messaged, \
                         sender_name, recipient_name
                     """,
@@ -165,14 +165,17 @@ class PeerQueries:
 
 
 class UserQueries:
-    def get_users(self):
+    def get_users(self, user_id):
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     """
                     SELECT *
-                    FROM users
-                    """
+                    FROM users u
+                    left join user_tags t on u.id = t.user_id
+                    WHERE (u.id = %s) Limit 1
+                    """,
+                    [user_id],
                 )
 
                 users = []
