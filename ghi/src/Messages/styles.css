@@ -24,7 +24,7 @@
 }
 
 .inbox-cards {
-    display:flex;
+    /* display:flex; */
     margin-right: .5in;
     margin-left: -.5in;
 }

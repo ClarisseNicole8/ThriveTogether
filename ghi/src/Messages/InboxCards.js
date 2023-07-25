@@ -20,6 +20,7 @@ function InboxCards(props) {
 
             if (response.ok) {
                 setUserData(data.account)
+                setUserDataLoaded(true);
             } else {
                 console.log("Your data could not be fetched")
             }
@@ -32,30 +33,24 @@ function InboxCards(props) {
         async function getMessagesData() {
             if (!userDataLoaded || !userData) {
               return;
-            } //wait until userData is set
-            let url = `${process.env.REACT_APP_API_HOST}/api/messages/${userData["id"]}`;
-            let response = await fetch(
-                url,
-                {
-                    credentials: "include",
-                }
-            );
-            let data = await response.json()
-
-            if (response.ok) {
-                setMessagesData(data)
             } else {
-                console.log("could not return user messages")
+                let url = `${process.env.REACT_APP_API_HOST}/api/messages/${userData["id"]}`;
+                let response = await fetch(
+                    url,
+                    {
+                    credentials: "include",
+                    }
+                );
+                let data = await response.json()
+                if (response.ok) {
+                  setMessagesData(data)
+                } else {
+                  console.log("could not return user messages")
             }
+                }
         }
 
         getMessagesData();
-    }, [userData, userDataLoaded]);
-
-    useEffect(() => {
-      if (userData) {
-        setUserDataLoaded(true);
-      }
     }, [userData, userDataLoaded]);
 
     const handleSetRecipient = (userId) => {
