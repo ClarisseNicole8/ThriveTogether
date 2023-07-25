@@ -22,7 +22,7 @@ def get_messages(
     return records
 
 
-@messages_router.post("/api/messages/create/", tags=["Messages"],
+@messages_router.post("/api/messages/create", tags=["Messages"],
                       response_model=List[MessageOut])
 def create_message(
         message_in: MessageIn,
