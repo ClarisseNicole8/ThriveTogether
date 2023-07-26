@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback } from "react";
 function PeerList() {
   const [peer, setPeer] = useState([]);
   const [peerData, setPeerData] = useState("");
+  const [peerDataLoaded, setPeerDataLoaded] = useState(false);
 
   useEffect(() => {
     async function getPeerData() {
@@ -13,33 +14,32 @@ function PeerList() {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
-        console.log("ACCOUNT DATA", data.account);
         setPeerData(data.account);
+        setPeerDataLoaded(true);
       } else {
         console.log("Peer data could not be fetched");
       }
     }
 
     getPeerData();
-  }, []);
-
+  }, [peerDataLoaded]);
 
   const LoadPeers = useCallback(async () => {
-    console.log("!!!", peerData);
-    const response = await fetch(
-      `${process.env.REACT_APP_API_HOST}/api/peers/${peerData["id"]}`
-    );
-
-    if (response.ok) {
-      const data = await response.json();
-      console.log("peerData", data);
-      setPeer(data);
+    if (!peerDataLoaded || !peerData) {
+      return;
     } else {
-      console.log("Error! Peer not found.");
-    }
-  }, [peerData])
+      const response = await fetch(
+        `${process.env.REACT_APP_API_HOST}/api/peers/${peerData["id"]}`
+      );
 
+      if (response.ok) {
+        const data = await response.json();
+        setPeer(data);
+      } else {
+        console.log("Error! Peer not found.");
+      }
+    }
+  }, [peerData, peerDataLoaded]);
 
   useEffect(() => {
     LoadPeers();
@@ -51,24 +51,18 @@ function PeerList() {
       <table className="table table-striped">
         <thead>
           <tr>
-            <th>Peer ID</th>
-            <th>Peer Name</th>
+            <th>Username</th>
             <th>Profile Link</th>
-            <th>Tags ID</th>
             <th>Profile Image</th>
-            <th>Status</th>
           </tr>
         </thead>
         <tbody>
           {peer.map((peerData) => {
             return (
               <tr key={peerData.id + peerData.peer_name}>
-                <td>{peerData.peer_id}</td>
                 <td>{peerData.peer_name}</td>
                 <td>{peerData.profile_link}</td>
-                <td>{peerData.tags_id}</td>
                 <td>{peerData.profile_image}</td>
-                <td>{peerData.status}</td>
               </tr>
             );
           })}
