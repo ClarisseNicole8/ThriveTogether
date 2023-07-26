@@ -14,16 +14,19 @@ lint-test-job:
     - pip install flake8
     - flake8 api
 
-# # Run the unit tests
-# api-unit-tests-job:
-#   image: python:3-bullseye
-#   stage: test
-#   needs:
-#     - lint-test-job
-#   script:
-#     - cd api
-#     - pip install -r requirements.txt
-#     - python -m pytest
+# Run the unit tests
+api-unit-tests-job:
+  image: python:3-bullseye
+  stage: test
+  needs:
+    - lint-test-job
+  script:
+    - cd api
+    - pip install -r requirements.txt
+    - python -m pytest
+  variables:
+    DATABASE_URL: "postgresql://example_user:secret@mar-10-pt-thrivetogetherdb-service.default.svc.cluster.local/postgres"
+    SIGNING_KEY: "MIIEvAIBADANBgkqhkiG9w0BAQEF"
 
 # # Build API Image:
 build-api-image:
