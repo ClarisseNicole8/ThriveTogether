@@ -116,6 +116,7 @@ const AccountForm = () => {
                             />
                     </div>
                     <div>
+                        <div className="d-flex justify-content-center"></div>
                         <input className='btn btn-primary' type='submit' value='Register' />
                     </div>
                 </form>
