@@ -34,10 +34,12 @@ const AccountForm = () => {
     };
 
     return (
-        <div className='card text-bg-light mb-3'>
-            <h5 className='card-header'>Signup</h5>
+        <div className='content-container bg-text rounded-edges d-flex justify-content-center'>
+            <h5 className='card-header'>Sign Up</h5>
             <div className='card-body'>
                 <form onSubmit={(e) => handleRegistration(e)}>
+                    <br></br>
+                    <br></br>
                     <div className='mb-3'>
                         <label className='form-label'>Username</label>
                         <input
@@ -116,7 +118,9 @@ const AccountForm = () => {
                             />
                     </div>
                     <div>
+                        <div className="d-flex justify-content-center">
                         <input className='btn btn-primary' type='submit' value='Register' />
+                    </div>
                     </div>
                 </form>
             </div>
