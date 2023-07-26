@@ -45,6 +45,7 @@ const AccountForm = () => {
                         <input
                             name='Username'
                             type='text'
+                            required
                             className='form-control'
                             onChange={(e) => {
                                 setUsername(e.target.value);
@@ -56,6 +57,7 @@ const AccountForm = () => {
                         <input
                             name='Password'
                             type='password'
+                            required
                             className='form-control'
                             onChange={(e) => {
                                 setPassword(e.target.value);
@@ -67,6 +69,7 @@ const AccountForm = () => {
                         <input
                             name='Name'
                             type='text'
+                            required
                             className='form-control'
                             onChange={(e) => {
                                 setName(e.target.value);
@@ -78,6 +81,7 @@ const AccountForm = () => {
                         <input
                             name='Age'
                             type='text'
+                            required
                             className='form-control'
                             onChange={(e) => {
                                 setAge(e.target.value);
@@ -89,6 +93,7 @@ const AccountForm = () => {
                         <input
                             name='Gender'
                             type='text'
+                            required
                             className='form-control'
                             onChange={(e) => {
                                 setGender(e.target.value);
@@ -100,6 +105,7 @@ const AccountForm = () => {
                         <input
                             name='Pronouns'
                             type='text'
+                            required
                             className='form-control'
                             onChange={(e) => {
                                 setPronouns(e.target.value);
@@ -111,6 +117,7 @@ const AccountForm = () => {
                         <input
                             name='Email'
                             type='text'
+                            required
                             className='form-control'
                             onChange={(e) => {
                                 setEmail(e.target.value);
