@@ -29,39 +29,41 @@ const AccountInfo = () => {
     };
 
     return (
-        <div>
-            <h2>Get Account Information</h2>
-            <form onSubmit={handleSubmit}>
+        <div className='content-container bg-text rounded-edges d-flex justify-content-center'>
+            <h5 className='card-header'>Get Account Information</h5>
+            <div className='card-body'>
+                <form onSubmit={handleSubmit}>
+                    <br></br>
+                    <label>
+                        User ID:
+                        <input
+                            type="text"
+                            value={userId}
+                            onChange={(e) => setUserId(e.target.value)}
+                        />
+                    </label>
+                    <div>
+                        <br></br>
+                    </div>
+                    <div>
+                        <input className='btn btn-primary' type='submit' value='Submit' />
+                    </div>
+                </form>
                 <br></br>
-                <label>
-                    User ID:
-                    <input
-                        type="text"
-                        value={userId}
-                        onChange={(e) => setUserId(e.target.value)}
-                    />
-                </label>
-                <div>
-                    <br></br>
-                </div>
-                <div>
-                    <input className='btn btn-primary' type='submit' value='Submit' />
-                </div>
-            </form>
-            <br></br>
-            {accountInfo && (
-                <div>
-                    <h3>Account Information: {userId}</h3>
-                    <pre>{JSON.stringify(accountInfo, null, 2)}</pre>
-                    <br></br>
-                    <Link to={`/update`}>
-                            <div>
-                                <input className='btn btn-primary' type='submit' value='Update' />
-                            </div>
-                    </Link>
-                    <br></br>
-                </div>
-            )}
+                {accountInfo && (
+                    <div >
+                        <h5>Account Information: {userId}</h5>
+                        <pre>{JSON.stringify(accountInfo, null, 2)}</pre>
+                        <br></br>
+                        <Link to={`/update`}>
+                                <div>
+                                    <input className='btn btn-primary' type='submit' value='Update' />
+                                </div>
+                        </Link>
+                        <br></br>
+                    </div>
+                )}
+        </div>
         </div>
     );
 };
