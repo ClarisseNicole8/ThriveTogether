@@ -315,6 +315,12 @@ Send and view data for API endpoints at: http://localhost:8000/
 | --------- | --------- | --------- |
 | Get Matches | GET | /matches/{tag} |
 
+- Get Matches (input)
+```
+The tag parameter in the url is the name of the tag as a string.
+```
+
+
 - Get Matches (output)
 ```
 {
@@ -340,9 +346,9 @@ Send and view data for API endpoints at: http://localhost:8000/
 | Action | Method | Path |
 | --------- | --------- | --------- |
 | Get All Tags | GET | /tags |
-| Get User Tags | /tags/{username} |
+| Get User Tags | GET | /tags/{username} |
 | Add User Tag | POST | /tags/{username} |
-| Delete User Tag | /tags/{tag_id} |
+| Delete User Tag | DELETE | /tags/{tag_id} |
 | Create Tag | POST | /tags/create |
 
 -  Get All Tags (output)
@@ -363,6 +369,11 @@ Send and view data for API endpoints at: http://localhost:8000/
 }
 ```
 
+- Add User Tag (input)
+```
+The tag parameter in the url is the name of the tag as a integer.
+```
+
 - Add User Tag (output)
 ```
 {
@@ -370,7 +381,12 @@ Send and view data for API endpoints at: http://localhost:8000/
 }
 ```
 
-- Delete User Tag
+- Delete User Tag (input)
+```
+The tag parameter in the url is the name of the tag as a integer.
+```
+
+- Delete User Tag (output)
 ```
 {
   "detail": "string"
