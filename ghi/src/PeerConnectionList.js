@@ -11,7 +11,6 @@ const PeerConnectionList = () => {
         credentials: "include",
       });
       const data = await response.json();
-
       if (response.ok) {
         setLoginAccount(data.account);
       }
@@ -25,7 +24,9 @@ const PeerConnectionList = () => {
       if (!loginAccount) {
         return;
       }
+      // get peer request data
       let listUrl = `${process.env.REACT_APP_API_HOST}/api/peer_connections/${loginAccount.id}`;
+      // let listUrl=`${process.env.REACT_APP_API_HOST}/api/peer_connections/1`;
       const response = await fetch(listUrl);
       if (response.ok) {
         const data = await response.json();
@@ -38,6 +39,7 @@ const PeerConnectionList = () => {
 
   const handleSubmit = async (event) => {
     let approve_data = {};
+    let approve_data2 = {};
     let locationUrl = `${process.env.REACT_APP_API_HOST}/api/peerRequest/operate/${event.peerConnections.recipient}/${event.peerConnections.sender}/${event.operate}`;
     const fetchConfig = {
       method: "post",
@@ -71,7 +73,27 @@ const PeerConnectionList = () => {
         };
         const response = await fetch(approveUrl, approveConfig);
         if (response.ok) {
-          refreshPage();
+          let approveUrl = `${process.env.REACT_APP_API_HOST}/api/peerAdd`;
+          approve_data2 = {
+            user_id: event.peerConnections.sender,
+            peer_id: event.peerConnections.recipient,
+            peer_name: event.loginAccount.name,
+            profile_link: "",
+            tags_id: 1,
+            profile_image: "",
+            status: 0,
+          };
+          const approveConfig2 = {
+            method: "post",
+            body: JSON.stringify(approve_data2),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          };
+          const response2 = await fetch(approveUrl, approveConfig2);
+          if (response2.ok) {
+            refreshPage();
+          }
         }
       }
     }
@@ -110,6 +132,7 @@ const PeerConnectionList = () => {
                       className="btn btn-outline-warning"
                       onClick={handleSubmit.bind(this, {
                         peerConnections,
+                        loginAccount,
                         operate: "Approve",
                       })}
                     >
