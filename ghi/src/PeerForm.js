@@ -19,8 +19,7 @@ function PeerForm() {
       recipient_name: recipientName,
     };
 
-    const peerUrl = `${process.env.REACT_APP_API_HOST}/api/connections/create/`;
-    // "http://localhost:8000/api/connections/create/";
+    const peerUrl = `${process.env.REACT_APP_API_HOST}/api/connections/create`;
     const fetchConfig = {
       method: "post",
       body: JSON.stringify(data),

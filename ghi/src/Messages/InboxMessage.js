@@ -67,7 +67,7 @@ function InboxMessage(props){
         data.recipient = peer;
         handleSetRecipient(peer);
 
-        const createMessageUrl = `${process.env.REACT_APP_API_HOST}/api/messages/create/`;
+        const createMessageUrl = `${process.env.REACT_APP_API_HOST}/api/messages/create`;
         const fetchConfig = {
             credentials: "include",
             method: "post",
@@ -79,7 +79,6 @@ function InboxMessage(props){
 
         try {
             const response = await fetch(createMessageUrl, fetchConfig);
-            // let info = await response.json();
 
             if (response.ok) {
                 const messagesUrl = `${process.env.REACT_APP_API_HOST}/api/messages/${data.sender}/message/${data.recipient}`;

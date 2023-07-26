@@ -25,9 +25,7 @@ const PeerConnectionList = () => {
       if (!loginAccount) {
         return;
       }
-      // get peer request data
       let listUrl = `${process.env.REACT_APP_API_HOST}/api/peer_connections/${loginAccount.id}`;
-      // let listUrl=`${process.env.REACT_APP_API_HOST}/api/peer_connections/1`;
       const response = await fetch(listUrl);
       if (response.ok) {
         const data = await response.json();

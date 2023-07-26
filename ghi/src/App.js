@@ -65,7 +65,6 @@ function App() {
                 <Route exact path="/peer_connections" element={<PeerConnectionList />}></Route>
               </Routes>
               <ErrorNotification error={error} />
-              {/* <Construct info={launchInfo} /> */}
             </main>
           </div>
         </AuthProvider>
