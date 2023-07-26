@@ -80,7 +80,7 @@ function InboxForm(props) {
         data.content = message;
         data.sender = userData.id;
         data.recipient = props.recipient.recipient;
-        const createMessageUrl = `${process.env.REACT_APP_API_HOST}/api/messages/create/`;
+        const createMessageUrl = `${process.env.REACT_APP_API_HOST}/api/messages/create`;
         const fetchConfig = {
             credentials: "include",
             method: "post",

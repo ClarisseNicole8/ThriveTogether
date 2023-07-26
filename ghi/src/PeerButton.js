@@ -13,7 +13,7 @@ function PeerButton(props) {
       sender_name: props.senderName,
       recipient_name: props.recipientName,
     };
-    const peerUrl = `${process.env.REACT_APP_API_HOST}/api/connections/create/`;
+    const peerUrl = `${process.env.REACT_APP_API_HOST}/api/connections/create`;
     const fetchConfig = {
       method: "post",
       body: JSON.stringify(data),
