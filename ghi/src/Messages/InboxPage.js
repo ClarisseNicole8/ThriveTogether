@@ -16,8 +16,9 @@ function InboxPage(props) {
 
   if (recipient.recipient === "") {
     content = (
-      <div className="cards-container">
-        <div className="solo-inbox-cards">
+      <div className="initial-container">
+        <div className="inbox-cards">
+          <button className="btn btn-sm btn-primary" onClick={reloadPage}>New Message</button>
           <InboxCards />
         </div>
         <div className="inbox-message">
@@ -27,24 +28,21 @@ function InboxPage(props) {
     );
   } else {
     content = (
-      <div className="container">
-        <div className="inbox-container">
+        <div className="loaded-container">
           <div className="inbox-cards">
-            <div className="inbox-card">
+            <button className="btn btn-sm btn-primary" onClick={reloadPage}>New Message</button>
             <InboxCards />
-            </div>
           </div>
           <div className="inbox-form">
             <InboxForm />
           </div>
         </div>
-      </div>
     );
   }
 
   return (
     <div className="inbox-page">
-      <button className="btn btn-lg btn-primary" onClick={reloadPage}>New Message</button>
+      {/* <button className="btn btn-lg btn-primary" onClick={reloadPage}>New Message</button> */}
       {content}
     </div>
   );
