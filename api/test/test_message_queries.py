@@ -18,7 +18,7 @@ def message_queries():
     return MessageQueries()
 
 
-class EmptyMessageQueries:
+class DummyMessageQueries:
     def create_message(self, data):
         return fake_message
 
@@ -52,8 +52,8 @@ fake_message = {
     "username": "agifford33",
     "profile_image": "https://img.fixthephoto.com/blog/images/gallery/",
     "profile_link": None,
-    "user_id": 1
-  }
+    "user_id": 1,
+}
 
 
 def fake_get_current_account_data():
@@ -62,7 +62,7 @@ def fake_get_current_account_data():
         recipient=1,
         sender=2,
         content="hi",
-        date='2023-07-20T21:03:33.810572',
+        date="2023-07-20T21:03:33.810572",
         is_read=False,
         username="jeremyia",
         profile_image="string",
@@ -72,10 +72,11 @@ def fake_get_current_account_data():
 
 
 def test_create_message(test_client):
-    app.dependency_overrides[authenticator.get_current_account_data] = \
-        fake_get_current_account_data
+    app.dependency_overrides[
+        authenticator.get_current_account_data
+    ] = fake_get_current_account_data
     test_client = TestClient(app)
-    app.dependency_overrides[MessageQueries] = EmptyMessageQueries
+    app.dependency_overrides[MessageQueries] = DummyMessageQueries
 
     data = {
         "sender": 2,
@@ -86,15 +87,18 @@ def test_create_message(test_client):
     response = test_client.post("/api/messages/create/", json=data)
 
     assert response.status_code == 200
-    assert response.json() == [{
-        "id": 10,
-        "recipient": 1,
-        "sender": 2,
-        "content": "you finally did it!!!",
-        "date": "2023-07-20T01:05:46.337467",
-        "is_read": False,
-        "username": "agifford33",
-        "profile_image": "https://img.fixthephoto.com/blog/images/gallery/",
-        "profile_link": None,
-        "user_id": 1
-    }]
+    assert response.json() == [
+        {
+            "id": 10,
+            "recipient": 1,
+            "sender": 2,
+            "content": "you finally did it!!!",
+            "date": "2023-07-20T01:05:46.337467",
+            "is_read": False,
+            "username": "agifford33",
+            "profile_image":
+                "https://img.fixthephoto.com/blog/images/gallery/",
+            "profile_link": None,
+            "user_id": 1,
+        }
+    ]
