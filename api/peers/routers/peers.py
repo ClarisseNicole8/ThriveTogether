@@ -6,7 +6,6 @@ from ..models import PeerConnection, Peer, PeerConnections
 from ..queries.peers import PeerConnectionQueries, PeerQueries
 from authenticator import authenticator
 
-
 router = APIRouter()
 
 
@@ -80,6 +79,7 @@ async def get_peerConnection(
     user_id: int,
     response: Response,
     queries: PeerConnectionQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     result = {}
     records = queries.get_peer_connection(user_id)
@@ -105,6 +105,7 @@ async def update_peerConnection(
     status: str,
     response: Response,
     queries: PeerQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     records = queries.update_peer_connections(status, user_id, sendRequest_id)
     return records
@@ -120,6 +121,7 @@ async def insert_peer(
     info: Peer,
     response: Response,
     queries: PeerQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     records = queries.insert_peer(info)
     return records
