@@ -1,6 +1,6 @@
 # GHI Design
 
-![Thrive Together Wireframes](.\images\thrivetogether_wireframes.png)
+![Thrive Together Wireframes](docs/images/thrivetogether_wireframes.png)
 
 The whole of the app is easily navigable by the links in the navbars to the top and left sides of the screen. It is composed of the following pages:
 

@@ -114,7 +114,7 @@ const EditTags = () => {
 
     return (
         <div>
-            <div className="card text-bg-light mb-3">
+            <div className="content-container rounded-edges bg-text mb-3">
                 <h3>Current User Tags:</h3>
                 <div className="d-flex mb-3">
                     {userTags.map(tag => {
