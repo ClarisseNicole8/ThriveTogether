@@ -20,15 +20,5 @@ class Peer(BaseModel):
     status: int
 
 
-class User(BaseModel):
-    id: int
-    username: str
-    name: str
-    age: int
-    gender: str
-    pronouns: str
-    email: str
-
-
 class PeerConnections(BaseModel):
     peerConnections: list[PeerConnection]

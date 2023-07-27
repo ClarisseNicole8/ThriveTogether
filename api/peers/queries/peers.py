@@ -162,26 +162,3 @@ class PeerQueries:
                     for i, column in enumerate(cur.description):
                         record[column.name] = row[i]
                 return record
-
-
-class UserQueries:
-    def get_users(self, user_id):
-        with pool.connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    """
-                    SELECT *
-                    FROM users u
-                    left join user_tags t on u.id = t.user_id
-                    WHERE (u.id = %s) Limit 1
-                    """,
-                    [user_id],
-                )
-
-                users = []
-                for row in cur.fetchall():
-                    record = {}
-                    for i, column in enumerate(cur.description):
-                        record[column.name] = row[i]
-                    users.append(record)
-                return users

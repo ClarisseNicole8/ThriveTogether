@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, Response
 from typing import List
 
-from ..models import PeerConnection, Peer, User, PeerConnections
+from ..models import PeerConnection, Peer, PeerConnections
 
-from ..queries.peers import PeerConnectionQueries, PeerQueries, UserQueries
+from ..queries.peers import PeerConnectionQueries, PeerQueries
 
 router = APIRouter()
 
@@ -59,40 +59,6 @@ def get_peers(
         )
         peers.append(peer)
     return peers
-
-
-@router.get("/api/users/{user_id}", tags=["Peers"], response_model=List[User])
-def get_users(
-    user_id: int,
-    response: Response,
-    queries: UserQueries = Depends(),
-):
-    records = queries.get_users(user_id)
-
-    if records is None:
-        response.status_code = 404
-        return []
-    print(records)
-    users = []
-    for record in records:
-        user = User(
-            id=record["id"],
-            username=record["username"],
-            name=record["name"],
-            age=record["age"],
-            gender=record["gender"],
-            pronouns=record["pronouns"],
-            profile_link=record["profile_link"],
-            profile_image=record["profile_image"],
-            banner_image=record["banner_image"],
-            email=record["email"],
-            about_me=record["about_me"],
-            my_story=record["my_story"],
-            preferences=record["preferences"],
-            tag_id=record["tag_id"],
-        )
-        users.append(user)
-    return users
 
 
 # This function is to show the other user request to be a peer for the login\
