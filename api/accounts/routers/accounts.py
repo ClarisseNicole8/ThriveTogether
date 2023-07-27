@@ -65,6 +65,7 @@ async def create_account(
 async def get_account_info(
     account_id: int,
     accounts: AccountQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     account = accounts.get_account_info(account_id)
     if not account:
@@ -83,6 +84,7 @@ async def update_account_info(
     account_id: int,
     info: AccountOut,
     accounts: AccountQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     account = accounts.get_account_info(account_id)
     if not account:

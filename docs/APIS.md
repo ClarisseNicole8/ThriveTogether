@@ -4,14 +4,16 @@ Send and view data for API endpoints at: http://localhost:8000/
 
 # Messages
 
-| Action | Method | Path |
-| --------- | --------- | --------- |
-| Get messages | GET | /messages/{user_id} |
-| Create a message | POST | /messages/create |
-| Get messages from one user | GET | /messages/{user_id}/message/{user2_id} |
+| Action                     | Method | Path                                   |
+| -------------------------- | ------ | -------------------------------------- |
+| Get messages               | GET    | /messages/{user_id}                    |
+| Create a message           | POST   | /messages/create                       |
+| Get messages from one user | GET    | /messages/{user_id}/message/{user2_id} |
+
 ---
 
 - Get messages (output)
+
 ```
 [
   [
@@ -32,6 +34,7 @@ Send and view data for API endpoints at: http://localhost:8000/
 ```
 
 - Create a message (input)
+
 ```
 {
   "recipient": 0,
@@ -41,6 +44,7 @@ Send and view data for API endpoints at: http://localhost:8000/
 ```
 
 - Create a message (output)
+
 ```
 [
   {
@@ -59,6 +63,7 @@ Send and view data for API endpoints at: http://localhost:8000/
 ```
 
 - Get messages from one user (output)
+
 ```
 [
   {
@@ -78,13 +83,14 @@ Send and view data for API endpoints at: http://localhost:8000/
 
 # Accounts
 
-| Action | Method | Path |
-| --------- | --------- | --------- |
-| Create Account | POST | /accounts |
-| Get Account Info | GET | /accounts/{account_id} |
-| Update Account Info | PUT | /accounts/{account_id} |
+| Action              | Method | Path                   |
+| ------------------- | ------ | ---------------------- |
+| Create Account      | POST   | /accounts              |
+| Get Account Info    | GET    | /accounts/{account_id} |
+| Update Account Info | PUT    | /accounts/{account_id} |
 
 - Create Account (input)
+
 ```
 {
   "username": "string2",
@@ -98,6 +104,7 @@ Send and view data for API endpoints at: http://localhost:8000/
 ```
 
 - Create Account (output)
+
 ```
 {
   "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4YTM5OWU5Zi04ZGJjLTQzMzAtYTE1YS02NTEwMTc4NWNhNzkiLCJleHAiOjE2OTAzMTgyNTksInN1YiI6InN0cmluZzIiLCJhY2NvdW50Ijp7ImlkIjo0LCJ1c2VybmFtZSI6InN0cmluZzIiLCJuYW1lIjoic3RyaW5nIiwiYWdlIjowLCJnZW5kZXIiOiJzdHJpbmciLCJwcm9ub3VucyI6InN0cmluZyIsImVtYWlsIjoic3RyaW5nIiwicHJvZmlsZV9pbWFnZSI6bnVsbCwiYmFubmVyX2ltYWdlIjpudWxsLCJhYm91dF9tZSI6bnVsbCwibXlfc3RvcnkiOm51bGwsInByZWZlcmVuY2VzIjpudWxsfX0.VYugjeUmuD95vpH07LS056LLqJq1y1dlE4n3Sxrsd1Q",
@@ -120,6 +127,7 @@ Send and view data for API endpoints at: http://localhost:8000/
 ```
 
 - Get Account Info (input)
+
 ```
 {
     "account_id" : int
@@ -127,6 +135,7 @@ Send and view data for API endpoints at: http://localhost:8000/
 ```
 
 - Get Account Info (output)
+
 ```
 {
   "id": 1,
@@ -145,6 +154,7 @@ Send and view data for API endpoints at: http://localhost:8000/
 ```
 
 - Update Account Info (input)
+
 ```
 {
     "account_id" : int
@@ -152,6 +162,7 @@ Send and view data for API endpoints at: http://localhost:8000/
 ```
 
 - Update Account Info (output)
+
 ```
 {
   "id": 1,
@@ -171,16 +182,16 @@ Send and view data for API endpoints at: http://localhost:8000/
 
 # Peers
 
-| Action | Method | Path |
-| --------- | --------- | --------- |
-| Create Connection | POST | /connections/create |
-| Get Peers | GET | /peers/{user_id} |
-| Get Users | GET | /users/{user_id} |
-|Get Peerconnection | GET | /peer_connections/{user_id} |
-| Update Peerconnection | POST | /peerRequest/operate/{user_id}/{sendRequest_id}/{status} |
-| Insert Peer | POST | /peerAdd |
+| Action                | Method | Path                                                     |
+| --------------------- | ------ | -------------------------------------------------------- |
+| Create Connection     | POST   | /connections/create                                      |
+| Get Peers             | GET    | /peers/{user_id}                                         |
+| Get Peerconnection    | GET    | /peer_connections/{user_id}                              |
+| Update Peerconnection | POST   | /peerRequest/operate/{user_id}/{sendRequest_id}/{status} |
+| Insert Peer           | POST   | /peerAdd                                                 |
 
--  Create Connection (input)
+- Create Connection (input)
+
 ```
 {
   "sender": 1,
@@ -193,6 +204,7 @@ Send and view data for API endpoints at: http://localhost:8000/
 ```
 
 - Create Connection (output)
+
 ```
 {
   "sender": 1,
@@ -205,6 +217,7 @@ Send and view data for API endpoints at: http://localhost:8000/
 ```
 
 - Get Peers (input)
+
 ```
 {
     "user_id" : int
@@ -212,6 +225,7 @@ Send and view data for API endpoints at: http://localhost:8000/
 ```
 
 - Get Peers (output)
+
 ```
 [
   {
@@ -226,29 +240,8 @@ Send and view data for API endpoints at: http://localhost:8000/
 ]
 ```
 
-- Get Users (input)
-```
-{
-    "user_id" : int
-}
-```
-
-- Get Users (output)
-```
-[
-  {
-    "id": 0,
-    "username": "string",
-    "name": "string",
-    "age": 0,
-    "gender": "string",
-    "pronouns": "string",
-    "email": "string"
-  }
-]
-```
-
 - Get Peerconnection (input)
+
 ```
 {
     "user_id" : int
@@ -256,6 +249,7 @@ Send and view data for API endpoints at: http://localhost:8000/
 ```
 
 - Get Peerconnection (output)
+
 ```
 {
   "peerConnections": [
@@ -272,6 +266,7 @@ Send and view data for API endpoints at: http://localhost:8000/
 ```
 
 - Update Peerconnection (output)
+
 ```
 {
   "sender": 0,
@@ -284,6 +279,7 @@ Send and view data for API endpoints at: http://localhost:8000/
 ```
 
 - Insert Peer (input)
+
 ```
 {
   "user_id": 0,
@@ -297,6 +293,7 @@ Send and view data for API endpoints at: http://localhost:8000/
 ```
 
 - Insert Peer (output)
+
 ```
 {
   "user_id": 0,
@@ -311,17 +308,18 @@ Send and view data for API endpoints at: http://localhost:8000/
 
 # Matches
 
-| Action | Method | Path |
-| --------- | --------- | --------- |
-| Get Matches | GET | /matches/{tag} |
+| Action      | Method | Path           |
+| ----------- | ------ | -------------- |
+| Get Matches | GET    | /matches/{tag} |
 
 - Get Matches (input)
+
 ```
 The tag parameter in the url is the name of the tag as a string.
 ```
 
-
 - Get Matches (output)
+
 ```
 {
   "matches": [
@@ -343,15 +341,16 @@ The tag parameter in the url is the name of the tag as a string.
 
 # Tags
 
-| Action | Method | Path |
-| --------- | --------- | --------- |
-| Get All Tags | GET | /tags |
-| Get User Tags | GET | /tags/{username} |
-| Add User Tag | POST | /tags/{username} |
-| Delete User Tag | DELETE | /tags/{tag_id} |
-| Create Tag | POST | /tags/create |
+| Action          | Method | Path             |
+| --------------- | ------ | ---------------- |
+| Get All Tags    | GET    | /tags            |
+| Get User Tags   | GET    | /tags/{username} |
+| Add User Tag    | POST   | /tags/{username} |
+| Delete User Tag | DELETE | /tags/{tag_id}   |
+| Create Tag      | POST   | /tags/create     |
 
--  Get All Tags (output)
+- Get All Tags (output)
+
 ```
 {
   "tags": [
@@ -361,6 +360,7 @@ The tag parameter in the url is the name of the tag as a string.
 ```
 
 - Get User Tags(output)
+
 ```
 {
   "tags": [
@@ -370,11 +370,13 @@ The tag parameter in the url is the name of the tag as a string.
 ```
 
 - Add User Tag (input)
+
 ```
 The tag parameter in the url is the name of the tag as a integer.
 ```
 
 - Add User Tag (output)
+
 ```
 {
   "detail": "string"
@@ -382,11 +384,13 @@ The tag parameter in the url is the name of the tag as a integer.
 ```
 
 - Delete User Tag (input)
+
 ```
 The tag parameter in the url is the name of the tag as a integer.
 ```
 
 - Delete User Tag (output)
+
 ```
 {
   "detail": "string"
@@ -394,6 +398,7 @@ The tag parameter in the url is the name of the tag as a integer.
 ```
 
 - Create Tag (input)
+
 ```
 {
   "tag": "string"
@@ -401,6 +406,7 @@ The tag parameter in the url is the name of the tag as a integer.
 ```
 
 - Create Tag (output)
+
 ```
 {
   "tag": "string"

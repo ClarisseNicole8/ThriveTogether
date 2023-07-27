@@ -10,6 +10,7 @@ const PeerConnectionList = () => {
       const response = await fetch(url, {
         credentials: "include",
       });
+
       const data = await response.json();
       if (response.ok) {
         setLoginAccount(data.account);
@@ -17,17 +18,17 @@ const PeerConnectionList = () => {
     }
 
     getPeerData();
-  }, [loginAccount]);
+  }, []);
 
   useEffect(() => {
     async function showPeerRequest() {
       if (!loginAccount) {
         return;
       }
-      // get peer request data
       let listUrl = `${process.env.REACT_APP_API_HOST}/api/peer_connections/${loginAccount.id}`;
-      // let listUrl=`${process.env.REACT_APP_API_HOST}/api/peer_connections/1`;
-      const response = await fetch(listUrl);
+      const response = await fetch(listUrl, {
+        credentials: "include",
+      });
       if (response.ok) {
         const data = await response.json();
         setpeerRequest(data.peerConnections);

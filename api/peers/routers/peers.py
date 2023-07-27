@@ -4,6 +4,7 @@ from typing import List
 from ..models import PeerConnection, Peer, PeerConnections
 
 from ..queries.peers import PeerConnectionQueries, PeerQueries
+from authenticator import authenticator
 
 router = APIRouter()
 
@@ -17,6 +18,7 @@ def create_connection(
     peer_connection: PeerConnection,
     response: Response,
     queries: PeerConnectionQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     record = queries.create_connection(peer_connection)
     if record is None:
@@ -40,6 +42,7 @@ def get_peers(
     user_id: int,
     response: Response,
     queries: PeerQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     records = queries.get_peers(user_id)
     if records is None:
@@ -70,12 +73,13 @@ def get_peers(
 @router.get(
     "/api/peer_connections/{user_id}",
     tags=["Peers"],
-    response_model=PeerConnections
+    response_model=PeerConnections,
 )
 async def get_peerConnection(
     user_id: int,
     response: Response,
     queries: PeerConnectionQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     result = {}
     records = queries.get_peer_connection(user_id)
@@ -93,7 +97,7 @@ async def get_peerConnection(
 @router.post(
     "/api/peerRequest/operate/{user_id}/{sendRequest_id}/{status}",
     tags=["Peers"],
-    response_model=PeerConnection
+    response_model=PeerConnection,
 )
 async def update_peerConnection(
     user_id: int,
@@ -101,6 +105,7 @@ async def update_peerConnection(
     status: str,
     response: Response,
     queries: PeerQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     records = queries.update_peer_connections(status, user_id, sendRequest_id)
     return records
@@ -116,6 +121,7 @@ async def insert_peer(
     info: Peer,
     response: Response,
     queries: PeerQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     records = queries.insert_peer(info)
     return records
