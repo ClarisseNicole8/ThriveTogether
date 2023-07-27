@@ -52,7 +52,10 @@ class AccountQueries:
                 )
 
                 row = cur.fetchone()
-                return self.account_record_to_dict(row, cur.description)
+                return self.updated_account_record_to_dict(
+                    row,
+                    cur.description
+                    )
 
     def create(
             self,
