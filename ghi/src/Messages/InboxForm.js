@@ -159,7 +159,7 @@ return (
               <form onSubmit={handleSubmit} id="create-model-form">
                 <div className="form-floating mb-3">
                   <input onChange={handleNewMessage} required placeholder="NewMessage" type="text" id="new_message" name="new_message" value={message} className="form-control" />
-                  <label htmlFor="price">Message</label>
+                  <label htmlFor="new_message">Message</label>
                 </div>
                 <button className="btn btn-lg btn-primary">Send</button>
               </form>
