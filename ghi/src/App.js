@@ -4,7 +4,6 @@ import LoginForm from "./LoginForm.js";
 import AccountForm from "./AccountForm.js";
 import PeerList from "./PeerList.js";
 import PeerButton from "./PeerButton.js";
-import PeerForm from "./PeerForm.js";
 import AccountInfo from "./AccountInfo.js";
 import EditTags from "./EditTags.js";
 import Nav from "./Nav.js";
@@ -53,11 +52,6 @@ function App() {
                 <Route exact path="/inbox" element={<InboxPage />}></Route>
                 <Route exact path="/peers" element={<PeerList />}></Route>
                 <Route exact path="/connections" element={<PeerButton />}></Route>
-                <Route
-                  exact
-                  path="/connections/create"
-                  element={<PeerForm />}
-                ></Route>
                 <Route exact path="/matches" element={<MatchView />}></Route>
                 <Route exact path="/info" element={<AccountInfo />}></Route>
                 <Route exact path="/update" element={<AccountUpdate />}></Route>
