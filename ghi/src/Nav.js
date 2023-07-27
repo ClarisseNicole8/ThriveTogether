@@ -1,4 +1,4 @@
-import logo from "./images/placeholder-image-green.png";
+import logo from "./images/thrivetogether.png";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { NavLink, Link } from "react-router-dom";
 
