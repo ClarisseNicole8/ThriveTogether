@@ -68,7 +68,7 @@ def test_get_matches():
     )
     app.dependency_overrides[MatchQueries] = EmptyMatchQueries
 
-    response = client.get("/api/matches/ADHD/")
+    response = client.get("/api/matches/ADHD")
 
     app.dependency_overrides = {}
 
@@ -82,7 +82,7 @@ def test_no_matches():
     )
     app.dependency_overrides[MatchQueries] = EmptyMatchQueries
 
-    response = client.get("/api/matches/null/")
+    response = client.get("/api/matches/null")
 
     app.dependency_overrides = {}
 
