@@ -32,7 +32,7 @@ peer_connection list backend and operate for peer_connection backend
 
 July 20, 2023
 Today I worked on:
-Showed peer_connection list fornt-end and operate for peer_connection fornt-end
+Showed peer_connection list front-end and operate for peer_connection front-end
 
 July 17, 2023
 Today I worked on:
