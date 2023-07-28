@@ -37,7 +37,7 @@ fake_match = {
             }
 
 
-class EmptyMatchQueries:
+class FakeMatchQueries:
     def get_matches(self, tag):
         if tag in fake_match["tags"]:
             return {"matches": [fake_match]}
@@ -66,7 +66,7 @@ def test_get_matches():
     app.dependency_overrides[authenticator.get_current_account_data] = (
         fake_get_current_account_data
     )
-    app.dependency_overrides[MatchQueries] = EmptyMatchQueries
+    app.dependency_overrides[MatchQueries] = FakeMatchQueries
 
     response = client.get("/api/matches/ADHD")
 
@@ -80,7 +80,7 @@ def test_no_matches():
     app.dependency_overrides[authenticator.get_current_account_data] = (
         fake_get_current_account_data
     )
-    app.dependency_overrides[MatchQueries] = EmptyMatchQueries
+    app.dependency_overrides[MatchQueries] = FakeMatchQueries
 
     response = client.get("/api/matches/null")
 
