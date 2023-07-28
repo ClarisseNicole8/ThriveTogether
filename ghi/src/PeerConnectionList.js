@@ -48,6 +48,7 @@ const PeerConnectionList = () => {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
     };
     const response = await fetch(locationUrl, fetchConfig);
     if (response.ok) {
@@ -71,6 +72,7 @@ const PeerConnectionList = () => {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include",
         };
         const response = await fetch(approveUrl, approveConfig);
         if (response.ok) {
@@ -90,6 +92,7 @@ const PeerConnectionList = () => {
             headers: {
               "Content-Type": "application/json",
             },
+            credentials: "include",
           };
           const response2 = await fetch(approveUrl, approveConfig2);
           if (response2.ok) {
