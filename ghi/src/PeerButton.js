@@ -20,6 +20,7 @@ function PeerButton(props) {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
     };
     const response = await fetch(peerUrl, fetchConfig);
     if (response.ok) {
