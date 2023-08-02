@@ -7,7 +7,7 @@ html {
     box-sizing: inherit;
 }
 
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -20,7 +20,7 @@ html {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
+} */
 
 .grid {
   display: grid;
@@ -36,7 +36,7 @@ header {
 }
 
 body {
-  background-color: #d5e3f6;
+  background-color: #ffffff;
 }
 
 main {
@@ -62,19 +62,23 @@ main {
 }
 
 .bg-darkblue {
-    background-color: #697ba3;
+    /* background-color: #697ba3; */
+    background-color: #9451db;
 }
 
 .bg-midblue {
-    background-color: #96b5de;
+    /* background-color: #96b5de; */
+    background-color: rgb(152, 152, 246);
 }
 
 .bg-lightblue {
-    background-color: #d5e3f6;
+    /* background-color: #d5e3f6; */
+    background-color: rgb(152, 152, 246);
 }
 
 .bg-text {
-    background-color: #f7ede1;
+    /* background-color: #f7ede1; */
+    background-color: white;
 }
 
 .nav-container {
@@ -84,18 +88,19 @@ main {
 }
 
 .navbar-brand {
+    color: rgb(15, 1, 15);
     font-size: 1.5em;
     padding: 10px 15px;
-    background-color: #b3cc8b;
+    /* background-color: #b3cc8b; */
+    background-color: rgb(194, 194, 250);
     border-radius: 28px;
     font-weight: bold;
-    box-shadow: 0px 5px 0px #455e4f;
 }
 
 .nav-link {
     font-weight: bold;
-    color: #161925;
-    background-color: #d5e3f6;
+    color: rgb(15, 1, 15);
+    background-color: rgb(194, 194, 250);
     width: 150px;
     text-align: center;
     border-radius: 22px;
@@ -105,7 +110,8 @@ main {
 
 ul.navbar-nav {
     justify-content: space-evenly;
-    background-color: #697ba3;
+    /* background-color: #697ba3; */
+
     border-radius: 0px 0px 10px 10px;
     width: 100%;
 }
@@ -142,11 +148,13 @@ div.collapse.show, div.collapsing {
 
 .vertical-nav ul li {
   text-align: center;
-    background-color: #b3cc8b;
+
+    background-color: rgb(194, 194, 250);
     padding: 5px;
     margin: 10px;
     border-radius: 17px;
-    box-shadow: 0px 5px 0px #455e4f;
+
+     /* box-shadow: 0px 5px 0px #3f4aaf; */
 }
 
 .rounded-edges {
@@ -164,22 +172,71 @@ div.collapse.show, div.collapsing {
 .id-tag {
   margin: 5px;
   padding: 5px;
-  background-color: #96b5de;
+  background-color: rgb(194, 194, 250);
   border-radius: 7px;
 }
 
 a {
   text-decoration: none;
-  color: #161925;
+  color: rgb(15, 1, 15);
 }
 
 .btn-primary {
-  background-color: #6950a3;
-  border-color: #6950a3;
+  background-color: #7269f3;
+  border-color: #7269f3;
+  border-radius: 17px;
+  color: #000000;
+  font-weight: bold;
 }
 
 .content-container {
-  border: 25px solid #96b5de;
+  border: 25px solid rgb(152, 152, 246);
   margin: 10px;
   padding: 10px;
+}
+
+.lottie {
+  width: 750px;
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+}
+
+.navbar-brand2 {
+    margin-left: 500px;
+    margin-top:70px;
+    color: rgb(15, 1, 15);
+    font-size: 1.5em;
+    padding: 15px 75px;
+    /* background-color: #b3cc8b; */
+    background-color: rgb(152, 152, 246);
+    border-radius: 40px;
+    font-weight: bold;
+    box-shadow: 0px 5px 0px #660caf;
+}
+
+.logo-container2 {
+    margin-top: 70px;
+    width: 150px;
+    height: 150px;
+    padding: 15px;
+    position: fixed;
+    z-index: 2;
+}
+
+.circle2 {
+  border-radius: 50%;
+}
+
+.bg-darkblue2 {
+  background-color: #9451db;
+}
+
+.subtitle {
+  border-color: #9451db;
+  margin-left: 100px;
+  width: 450px;
+  display: flex;
+  justify-content: center;
+  border-width: 20px;
 }

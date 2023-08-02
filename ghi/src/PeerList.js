@@ -49,7 +49,7 @@ function PeerList() {
   }, [peerData, LoadPeers]);
 
   return (
-    <div>
+    <div className="content-container rounded-edges">
       <h1>Peers</h1>
       <table className="table table-striped">
         <thead>
