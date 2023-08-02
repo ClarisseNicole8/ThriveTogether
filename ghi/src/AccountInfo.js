@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 
 const AccountInfo = () => {
     const {id} = useParams();
-    // const [userId, setUserId] = useState('');
+    const [userId, setUserId] = useState('');
     const [accountInfo, setAccountInfo] = useState('');
     const [userData, setUserData] = useState('');
 
@@ -45,7 +45,8 @@ const AccountInfo = () => {
     // }
 
     useEffect(() => {
-        if (id === undefined) {
+
+        if (!id.is_integer()) {
             async function getUserData() {
             let url = `${process.env.REACT_APP_API_HOST}/token`;
             let response = await fetch(url, {
@@ -60,9 +61,11 @@ const AccountInfo = () => {
             }
     }
         getUserData();
-
+        setUserId(userData.id);
+        } else {
+            setUserId(id);
         }
-        getAccountInfo(id);
+        getAccountInfo(userId);
     }, [id]);
 
     return (

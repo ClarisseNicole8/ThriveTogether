@@ -59,9 +59,9 @@ function App() {
                   element={<PeerForm />}
                 ></Route>
                 <Route exact path="/matches" element={<MatchView />}></Route>
-                <Route path="/info" element={<AccountInfo />}>
+                {/* <Route path="/info" element={<AccountInfo />}> */}
                 <Route exact path="/info/:id" element={<AccountInfo />}></Route>
-                </Route>
+                {/* </Route> */}
                 <Route exact path="/update" element={<AccountUpdate />}></Route>
                 <Route exact path="/edit_tags" element={<EditTags />}></Route>
                 <Route exact path="/peer_connections" element={<PeerConnectionList />}></Route>

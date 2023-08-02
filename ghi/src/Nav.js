@@ -46,7 +46,7 @@ function Nav() {
                 <div className="vertical-nav bg-midblue dark-text">
                     <ul>
                         <li>
-                            <Link to="/info">View Profile</Link>
+                            <Link to="/info/me">View Profile</Link>
                         </li>
                         <li>
                             <Link to="/inbox">Inbox</Link>
