@@ -1,7 +1,7 @@
 import React from 'react';
 import Lottie from "lottie-react";
 import animation from "./animation.json";
-import logo from "./images/thrivetogether.png";
+import logo from "./images/thrivetogether2.png";
 import { NavLink } from "react-router-dom";
 
 
