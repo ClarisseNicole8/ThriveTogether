@@ -108,7 +108,7 @@ const PeerConnectionList = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container content-container rounded-edges">
       <table className="table table-striped">
         <thead>
           <tr>

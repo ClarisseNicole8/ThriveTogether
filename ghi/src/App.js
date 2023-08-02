@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import ErrorNotification from "./ErrorNotification";
+import { useEffect } from "react";
 import LoginForm from "./LoginForm.js";
 import AccountForm from "./AccountForm.js";
 import PeerList from "./PeerList.js";
@@ -7,7 +6,7 @@ import PeerButton from "./PeerButton.js";
 import AccountInfo from "./AccountInfo.js";
 import EditTags from "./EditTags.js";
 import Nav from "./Nav.js";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useLocation, BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import AccountUpdate from "./AccountUpdate.js";
@@ -15,11 +14,13 @@ import MatchView from "./MatchView.js";
 import InboxPage from "./Messages/InboxPage.js";
 import "./Messages/styles.css";
 import PeerConnectionList from "./PeerConnectionList.js";
+import LandingPage from "./LandingPage.js";
+
 
 function App() {
-  const [error, setError] = useState(null);
   const domain = /https:\/\/[^/]+/;
   const basename = process.env.PUBLIC_URL.replace(domain, "");
+
 
   useEffect(() => {
     async function getData() {
@@ -27,24 +28,35 @@ function App() {
       console.log("fastapi url: ", url);
       let response = await fetch(url);
       console.log("------- hello? -------");
-      let data = await response.json();
 
       if (response.ok) {
         console.log("got launch data!");
       } else {
         console.log("drat! something happened");
-        setError(data.message);
       }
     }
     getData();
   }, []);
 
   return (
+    <BrowserRouter basename={basename}>
+      <AuthProvider baseUrl={process.env.REACT_APP_API_HOST}>
+        <MainApp />
+      </AuthProvider>
+    </BrowserRouter>
+  );
+}
+
+function MainApp() {
+  const location = useLocation();
+
+  return (
     <div>
-      <BrowserRouter basename={basename}>
-        <AuthProvider baseUrl={process.env.REACT_APP_API_HOST}>
           <div className="grid">
-            <Nav />
+            <Routes>
+              <Route exact path="/" element={<LandingPage />}></Route>
+            </Routes>
+            {location.pathname !== "/" && <Nav />}
             <main className="main-content">
               <Routes>
                 <Route exact path="/login" element={<LoginForm />}></Route>
@@ -58,11 +70,10 @@ function App() {
                 <Route exact path="/edit_tags" element={<EditTags />}></Route>
                 <Route exact path="/peer_connections" element={<PeerConnectionList />}></Route>
               </Routes>
-              <ErrorNotification error={error} />
+              {/* <ErrorNotification error={error} /> */}
+
             </main>
           </div>
-        </AuthProvider>
-      </BrowserRouter>
     </div>
   );
 }
