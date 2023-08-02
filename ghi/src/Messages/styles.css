@@ -44,31 +44,38 @@
 
 
 .initial-container {
-    display:grid;
+    display:inline-grid;
     grid-template-columns: 20% 20% 20% 20% 20%;
     grid-template-rows: 20% 20% 20% 20% 20%;
 }
 
 .loaded-container {
-    display:grid;
+    display:inline-grid;
     grid-template-columns: 20% 20% 20% 20% 20%;
-    grid-template-rows: 20% 20% 20% 20% 20%;
+    grid-template-rows: 25% 25% 25% 25%;
+    /* position: absolute;
+    top: 10px; */
 }
 
 .inbox-cards {
     grid-column-start: 1;
     grid-column-end: 3;
     grid-row-start: 1.75;
+    grid-row-end: 2;
 }
 
 .inbox-form {
     grid-column-start: 3;
     grid-column-end: 6;
-    grid-row-start: 2;
+    grid-row-start: 1.75;
+    grid-row-end: 2;
+    position: relative;
 }
 
 .inbox-message {
     grid-column-start: 3;
     grid-column-end: 6;
     grid-row-start: 1;
+    grid-row-end: 2;
+
 }
