@@ -1,10 +1,30 @@
 import logo from "./images/thrivetogether.png";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { NavLink, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 function Nav() {
+    const [userData, setUserData] = useState({});
     const { logout } = useToken();
     const { token } = useToken();
+
+    useEffect(() => {
+        async function getUserData() {
+        let url = `${process.env.REACT_APP_API_HOST}/token`;
+        let response = await fetch(url, {
+            credentials: "include",
+        });
+        let data = await response.json();
+
+        if (response.ok) {
+            setUserData(data.account);
+        } else {
+            console.log("User data could not be fetched");
+        }
+        }
+
+        getUserData();
+    }, [token]);
 
     return (
         <>
@@ -32,11 +52,18 @@ function Nav() {
                                         </>
                                     }
                                     {token &&
-                                    <li className="nav-item">
-                                        <button className="nav-link" onClick={logout}>
-                                            Logout
-                                        </button>
-                                    </li>
+                                    <>
+                                        <li className="nav-item">
+                                            <div className="nav-link" style={{width: "250px"}}>
+                                                Welcome, {userData.name}
+                                            </div>
+                                        </li>
+                                        <li className="nav-item">
+                                            <button className="nav-link" onClick={logout}>
+                                                Logout
+                                            </button>
+                                        </li>
+                                    </>
                                     }
                                 </ul>
                             </div>
@@ -55,13 +82,13 @@ function Nav() {
                             <Link to="/matches">Matches</Link>
                         </li>
                         <li>
-                            <Link to="/peers">Peers</Link>
-                        </li>
-                        <li>
                             <Link to="/edit_tags">Edit Tags</Link>
                         </li>
                         <li>
-                            <Link to="/peer_connections">Check peer request</Link>
+                            <Link to="/peers">Peers</Link>
+                        </li>
+                        <li>
+                            <Link to="/peer_connections">Peer Requests</Link>
                         </li>
                     </ul>
                 </div>
