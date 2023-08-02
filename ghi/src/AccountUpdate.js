@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 const AccountUpdate = () => {
-    const [userId, setUserId] = useState('');
     const [accountInfo, setAccountInfo] = useState({});
+    const [userData, setUserData] = useState('');
     const [editedAccountInfo, setEditedAccountInfo] = useState({
         username: '',
         name: '',
@@ -17,33 +17,55 @@ const AccountUpdate = () => {
         preferences: '',
     });
 
+  const getAccountInfo = useCallback(async() => {
+        try {
+          let url = `${process.env.REACT_APP_API_HOST}/api/accounts/${userData}`;
+          let response = await fetch(url, {
+            credentials: 'include',
+          });
+          let data = await response.json();
+
+          if (response.ok) {
+            setAccountInfo(data);
+          } else {
+            console.log('Account info could not be found');
+          }
+        } catch (error) {
+          console.error('Error fetching account info:', error);
+        }
+  }, [userData]);
+
+  useEffect(() => {
+    async function getUserData() {
+      let url = `${process.env.REACT_APP_API_HOST}/token`;
+      let response = await fetch(url, {
+        credentials: "include",
+      });
+      let data = await response.json();
+
+      if (response.ok) {
+        setUserData(data.account.id);
+      } else {
+        console.log("User data could not be fetched");
+      }
+    }
+
+    getUserData();
+  }, []);
+
   useEffect(() => {
     if (accountInfo) {
       setEditedAccountInfo({ ...accountInfo });
     }
   }, [accountInfo]);
 
-  async function getAccountInfo() {
-    try {
-      let url = `${process.env.REACT_APP_API_HOST}/api/accounts/${userId}`;
-      let response = await fetch(url, {
-        credentials: 'include',
-      });
-      let data = await response.json();
-
-      if (response.ok) {
-        setAccountInfo(data);
-      } else {
-        console.log('Account info could not be found');
-      }
-    } catch (error) {
-      console.error('Error fetching account info:', error);
-    }
-  }
+  useEffect(() =>{
+    getAccountInfo();
+  }, [userData, getAccountInfo]);
 
   async function updateAccountInfo() {
     try {
-      let url = `${process.env.REACT_APP_API_HOST}/api/accounts/${userId}`;
+      let url = `${process.env.REACT_APP_API_HOST}/api/accounts/${userData}`;
       const response = await fetch(url, {
         method: 'PUT',
         headers: {
@@ -69,36 +91,15 @@ const AccountUpdate = () => {
     setEditedAccountInfo({ ...editedAccountInfo, [name]: value });
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    await getAccountInfo();
-  };
-
   const handleUpdateSubmit = async (event) => {
     event.preventDefault();
     await updateAccountInfo();
+    getAccountInfo();
   };
 
   return (
     <div className="content-container bg-text rounded-edges d-flex justify-content-center">
       <div className='card-body'>
-        <form onSubmit={handleSubmit}>
-          <div className='mb-3'>
-            <label className="form-label">Enter User ID</label>
-            <input
-              type="text"
-              className='form-control'
-              value={userId || ''}
-              onChange={(e) => setUserId(e.target.value)} />
-          </div>
-          <br></br>
-          <div>
-            <div className="d-flex justify-content-center">
-              <input className='btn btn-primary' type='submit' value='Update' />
-              </div>
-          </div>
-          <br></br>
-        </form>
         <br></br>
         {accountInfo && (
           <div>
