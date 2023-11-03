@@ -20,7 +20,7 @@ You can visit the site here: https://mindful-codesquad.gitlab.io/thrive-together
 2. Clone the forked repository onto your local computer and inside of your chosen directory:
 
 ```
- git clone <<respository.url.here>>
+ git clone <<repository.url.here>>
 ```
 
 3. Build and run the project using Docker with the following commands:
