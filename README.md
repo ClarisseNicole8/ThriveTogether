@@ -1,4 +1,4 @@
-# Thrive Together
+# Thrive Together 🤍
 
 Thrive Together is your go-to app that creates a safe space for people experiencing mental health concerns to connect, find support, and mentor each other. This platform allows users to message each other safely and securely after connecting based on shared experiences.
 
