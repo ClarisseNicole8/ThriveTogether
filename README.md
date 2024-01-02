@@ -40,7 +40,7 @@ docker-compose up
 - [Data Models](./docs/DATA_MODEL.md)
 - [GHI](./docs/GHI.md)
 
-The whole of the app is easily navigable by the links in the navbars to the top and left sides of the screen.
+The app is easily navigable by the links in the navbars to the top and left sides of the screen.
 
 - Users can sign up for an account, and then login and logout.
 - Upon login, the user can view their own profile page as well as other user profile pages.
